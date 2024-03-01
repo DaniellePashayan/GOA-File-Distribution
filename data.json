@@ -1,0 +1,146 @@
+{
+    "bcbs sm": {
+        "inputs": {
+            "name": "GECB_BCBSSM_Inbound_*.xls",
+            "destination": "M:/CPP-Data/Sutherland RPA/BCBS Secure Messaging"
+        }
+    },
+    "codify": {
+        "inputs":{
+            "name": "GECB_Bundling_Inbound_*.xls",
+            "destination":"M:dd/CPP-Datadd/Sutherland RPAdd/Northwell Process Automation ETM Filesdd/Bundling"
+        }
+    },
+    "echo": {
+        "inputs":{
+            "name": "GECB_ECHO_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/ECHO"
+        }
+    },
+    "aehr oc": {
+        "inputs":{
+            "name": "GECB_MedicalRecord_Inbound_*_OnC.xls",
+            "destination":"M:d/CPP-Datad/Sutherland RPAd/Northwell Process Automation ETM Filesd/OC AllScripts"
+        }
+    },
+    "mpnd": {
+        "inputs":{
+            "name": "GECB_MPND_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Medicaid Pending"
+        }
+    },
+    "non codify": {
+        "inputs":{
+            "name": "GECB_BCBSClearClaim_Inbound_*.xls",
+            "destination":"M:d,CPP-Datad,Sutherland RPAd,Northwell Process Automation ETM Filesd,BCBS ClearClaim"
+        }
+    },
+    "powersign": {
+        "inputs":{
+            "name": "GECB_PowerSign_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/PowerSign"
+        }
+    },
+    "spni": {
+        "inputs":{
+            "name": "GECB_SPNI_Inbound_*.xls",
+            "destination":"M:d/CPP-Datad/Sutherland RPAd/Northwell Process Automation ETM Filesd/SPNI"
+        }
+    },
+    "sunrise": {
+        "inputs":{
+            "name": "GECB_SCM_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/SCM"
+        }
+    },
+    "aehr": {
+        "inputs":{
+            "name": "GECB_MedicalRecord_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
+        }
+    },
+    "cs1235": {
+        "inputs":{
+            "name": "GECB_CSE1235_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Coding/CSE1235"
+        }
+    },
+    "cs1236": {
+        "inputs":{
+            "name": "GECB_CSE1236_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Coding/CSE1236"
+        }
+    },
+    "tes 1249": {
+        "inputs":{
+            "name": "GECB_TES1249_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Coding/TES1249"
+        }
+    },
+    "tes 6146": {
+        "inputs":{
+            "name": "GECB_TES6146_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Coding/TES6146"
+        }
+    },
+    "coding audit": {
+        "inputs":{
+            "name": "GECB_CodingMRAuditPull_Inbound_*.xls",
+            "destination":"M:/CPP-Data/Sutherland RPA/Coding/MR AP"
+        }
+    },
+    "bad debt itemized statement": {
+        "inputs":{
+            "name": "*_PAANS_BADDEBT_IB_BOT_INBOUND.csv",
+            "destination":"M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY"
+        }
+    },
+    "mcd mco": {
+        "inputs":{
+            "name": "eCareNext_MCDMCO_Inbound_*.xls",
+            "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCD MCO Available"
+        }
+    },
+    "mcr advantage": {
+        "inputs":{
+            "name": "eCareNext_MCRAdvantage_Inbound_*.xls",
+            "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCR Advantage"
+        }
+    },
+    "mcr part b": {
+        "inputs":{
+            "name": "eCareNext_MCRPartB_Inbound_*.xls",
+            "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCR PartB Inactive"
+        }
+    },
+    "tpl": {
+        "inputs":{
+            "name": "eCareNext_TPLAlert_Inbound_*.csv",
+            "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/TPL Alert"
+        }
+    },
+    "homecare discharge": {
+        "inputs":{
+            "name": "CAREPORT_HomeCare_Inbound_*.csv",
+            "destination":"S:/NewRefCenter/ANewReferralPHI/NS/BOT/Input & Output Files"
+        }
+    },
+    "itemized statement": {
+        "inputs":{
+            "name": "*_PAANS_BOT*.csv",
+            "destination":"M:/FPPShare/FPP-Production/Itemized Statement HCX BOT"
+        }
+    },
+    "ncoa": {
+        "inputs":{
+            "name": "*.NSH.NCOA*_INBOUND.csv",
+            "destination":"M:/FPPShare/FPP-Production/NCOA BOT"
+        }
+    },
+    "mnp": {
+        "inputs":{
+            "name": "eCareNext_SOARIAN_Inbound_*.xls",
+            "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/Medicare Not Primary"
+        }
+    }
+}
