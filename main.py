@@ -6,7 +6,7 @@ from loguru import logger
 
 def move_inputs(json_data: dict, source_dir: str):
     # setup the logging
-    logger.add("inputs.log", rotation="14 days")
+    logger.add("logs/inputs.log", rotation="14 days")
      
     for use_case, use_case_data in data.items():
         logger.info(f"Moving files for {use_case}")
