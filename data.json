@@ -8,7 +8,7 @@
     "codify": {
         "inputs":{
             "name": "GECB_Bundling_Inbound_*.xls",
-            "destination":"M:dd/CPP-Datadd/Sutherland RPAdd/Northwell Process Automation ETM Filesdd/Bundling"
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Bundling"
         }
     },
     "echo": {
@@ -32,7 +32,7 @@
     "non codify": {
         "inputs":{
             "name": "GECB_BCBSClearClaim_Inbound_*.xls",
-            "destination":"M:d,CPP-Datad,Sutherland RPAd,Northwell Process Automation ETM Filesd,BCBS ClearClaim"
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/BCBS ClearClaim"
         }
     },
     "powersign": {
@@ -44,7 +44,7 @@
     "spni": {
         "inputs":{
             "name": "GECB_SPNI_Inbound_*.xls",
-            "destination":"M:d/CPP-Datad/Sutherland RPAd/Northwell Process Automation ETM Filesd/SPNI"
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/SPNI"
         }
     },
     "sunrise": {
@@ -91,8 +91,8 @@
     },
     "bad debt itemized statement": {
         "inputs":{
-            "name": "*_PAANS_BADDEBT_IB_BOT_INBOUND.csv",
-            "date_formatting": "YYYYMMDD",
+            "name": "*_PAANS_BAEBT_IB_BOT_INBOUND.csv",
+            "date_formatting": "YYYYMM",
             "date_formatting_dt": "%Y%m%d",
             "destination":"M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY"
         }
@@ -143,6 +143,14 @@
         "inputs":{
             "name": "eCareNext_SOARIAN_Inbound_*.xls",
             "destination":"M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/Medicare Not Primary"
+        }
+    },
+    "charge correction": {
+        "inputs":{
+            "name": "Northwell_ChargeCorrection_Input_*.csv",
+            "destination":"M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/MMDDYYYY",
+            "date_formatting": "MMDDYYYY",
+            "date_formatting_dt": "%m%d%Y"
         }
     }
 }
