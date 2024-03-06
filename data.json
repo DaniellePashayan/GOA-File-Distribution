@@ -20,7 +20,7 @@
     "aehr oc": {
         "inputs":{
             "name": "GECB_MedicalRecord_Inbound_*_OnC.xls",
-            "destination":"M:d/CPP-Datad/Sutherland RPAd/Northwell Process Automation ETM Filesd/OC AllScripts"
+            "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/OC AllScripts"
         }
     },
     "mpnd": {
@@ -55,7 +55,7 @@
     },
     "aehr": {
         "inputs":{
-            "name": "GECB_MedicalRecord_Inbound_*.xls",
+            "name": "GECB_MedicalRecord_Inbound_????????.xls",
             "destination":"M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
         }
     },
