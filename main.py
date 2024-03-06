@@ -68,7 +68,6 @@ def move_inputs(json_data: dict, source_dir: str):
                                 "MM", str(month).zfill(2))
                             destination = destination.replace(
                                 "DD", str(day).zfill(2))
-                            logger.debug(f"Destination: {destination}")
 
                             # make the directory if it doesnt exist
                             os.makedirs(destination, exist_ok=True)
