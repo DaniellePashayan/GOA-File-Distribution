@@ -75,10 +75,19 @@ def move_inputs(json_data: dict, source_dir: str):
 
 
 if __name__ == "__main__":
-    # read the json file
-    with open('data.json', 'r') as file:
-        data = json.load(file)
-
-    # move the input files to their respective destinations
+    # check if connected to MDrive
+    if not os.path.exists('M:/'):
+        logger.critical("M Drive not connected")
+    
     inputs_dir = r'M:\CPP-Data\Sutherland RPA\Northwell Process Automation ETM Files\GOA\Inputs'
-    move_inputs(data, inputs_dir)
+    if len(glob(inputs_dir+ '/*')) > 0:
+        # read the json file
+        with open('data.json', 'r') as file:
+            data = json.load(file)
+
+        # move the input files to their respective destinations
+        move_inputs(data, inputs_dir)
+    else:
+        logger.critical("No files found in the inputs directory")
+    
+  
