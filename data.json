@@ -59,6 +59,12 @@
       "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
     }
   },
+  "aehr multi": {
+    "inputs": {
+      "name": "GECB_MedicalRecord_Inbound_????????_?.xls",
+      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
+    }
+  },
   "cs1235": {
     "inputs": {
       "name": "GECB_CSE1235_Inbound_*.xls",
