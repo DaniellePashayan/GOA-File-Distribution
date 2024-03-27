@@ -97,7 +97,7 @@
   },
   "bad debt itemized statement": {
     "inputs": {
-      "name": "*_PAANS_BAEBT_IB_BOT_INBOUND.csv",
+      "name": "*_PAANS_BADDEBT_IB_BOT_INBOUND.csv",
       "date_formatting": "YYYYMMDD",
       "date_formatting_dt": "%Y%m%d",
       "destination": "M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY"
