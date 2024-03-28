@@ -5,6 +5,7 @@ from loguru import logger
 import datetime
 import re
 import pandas as pd
+from zipfile import ZipFile
 
 
 def move_single_file(source: str, destination: str):
@@ -106,7 +107,8 @@ def move_outputs(data: dict, source_dir: str):
                 destination = f'{destination}{date.strftime(date_formatting_dt)}'
                 if not os.path.exists(destination):
                     # unzip the file
-                    shutil.unpack_archive(file, destination)
+                    with ZipFile(file, 'r') as zf:
+                        zf.extractall(destination)
                     logger.success('moved files for '+ use_case)
                 # delete zip
                 # os.remove(file)
@@ -117,6 +119,7 @@ def parse_output_files(data:dict, source_dir:str):
         main = pd.read_excel(output_file, sheet_name='export')
         output_file_dest = output_file.replace(source_dir,'M:/CPP-Data/Sutherland RPA/Combined Outputs')
         for use_case, use_case_data in data.items():
+            logger.info(f'parsing output file for {use_case}')
             df = main[main['BotName'] == use_case_data['BotName']]
             
             date_formatting = 'MMDDYYYY'
@@ -129,7 +132,6 @@ def parse_output_files(data:dict, source_dir:str):
             file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
             
             destination = destination+file_name
-            print(destination)
             
             file_extension = use_case_data['file_name'].split('.')[-1]
             if file_extension == 'xlsx':
