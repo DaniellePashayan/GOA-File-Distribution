@@ -1,8 +1,10 @@
+from glob import glob
 import shutil
 import os
 from loguru import logger
 import datetime
 import re
+import pandas as pd
 
 
 def move_single_file(source: str, destination: str):
@@ -26,7 +28,7 @@ def move_single_file(source: str, destination: str):
             f"Error: {e} with {file_name_indiv} in {source_dir}")
 
 
-def extract_date_from_file_and_replace_date_in_destination(file_name: str, destination: str, date_formatting: str, date_formatting_dt: str):
+def extract_date_from_file_and_replace_date_in_destination(file_name: str, destination: str, date_formatting: str, date_formatting_dt: str, create_folder = True):
     # check if "_" exists in date_formatting:
     if "_" not in date_formatting:
         regex_search = "(\d{"+str(len(date_formatting))+"})"
@@ -51,11 +53,12 @@ def extract_date_from_file_and_replace_date_in_destination(file_name: str, desti
             "DD", str(day).zfill(2))
 
         # make the directory if it doesnt exist
-        os.makedirs(destination, exist_ok=True)
+        if create_folder:
+            os.makedirs(destination, exist_ok=True)
     return destination, date
 
 
-def move_inputs(json_data: dict, source_dir: str):
+def move_inputs(data: dict, source_dir: str):
     # setup the logging
     logger.add("logs/inputs.log", rotation="14 days")
 
@@ -78,15 +81,16 @@ def move_inputs(json_data: dict, source_dir: str):
                     date_formatting_dt = use_case_data['inputs']['date_formatting_dt']
                     # change the destination only
                     destination, date = extract_date_from_file_and_replace_date_in_destination(
-                        file, date_formatting, date_formatting_dt)
+                        file, destination, date_formatting, date_formatting_dt)
                 move_single_file(file, destination)
 
 
 def move_outputs(data: dict, source_dir: str):
     logger.add("logs/outputs.log", rotation="14 days")
     for use_case, use_case_data in data.items():
+        logger.info('moving outputs for '+ use_case)
         files = glob(os.path.join(source_dir, use_case_data['zip_name']))
-        logger.info(f"Found {len(files)} files for {use_case}")
+        logger.info(f"Found {len(files)} output files for {use_case}")
 
         if len(files) > 0:
             for file in files:
@@ -103,5 +107,34 @@ def move_outputs(data: dict, source_dir: str):
                 if not os.path.exists(destination):
                     # unzip the file
                     shutil.unpack_archive(file, destination)
+                    logger.success('moved files for '+ use_case)
                 # delete zip
-                os.remove(file)
+                # os.remove(file)
+
+def parse_output_files(data:dict, source_dir:str):
+    output_files = glob(source_dir + "/Outbound*.xlsx")
+    for output_file in output_files:
+        main = pd.read_excel(output_file, sheet_name='export')
+        output_file_dest = output_file.replace(source_dir,'M:/CPP-Data/Sutherland RPA/Combined Outputs')
+        for use_case, use_case_data in data.items():
+            df = main[main['BotName'] == use_case_data['BotName']]
+            
+            date_formatting = 'MMDDYYYY'
+            date_formatting_dt = '%m%d%Y'
+                
+            destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt, create_folder=False)
+            
+            date_format = use_case_data['date_format'].replace("YYYY", str(date.year)).replace("MM", str(date.month).zfill(2)).replace("DD", str(date.day).zfill(2))
+                
+            file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
+            
+            destination = destination+file_name
+            print(destination)
+            
+            file_extension = use_case_data['file_name'].split('.')[-1]
+            if file_extension == 'xlsx':
+                df.to_excel(destination, index=False)
+            if file_extension == 'xls':
+                with pd.ExcelWriter(destination, engine='openpyxl') as writer:
+                    df.to_excel(writer, sheet_name='export', index=False)
+        shutil.move(output_file,output_file_dest)
