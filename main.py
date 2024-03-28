@@ -1,7 +1,9 @@
 from glob import glob
 import json
+import os
+from loguru import logger
 
-from functions import move_single_file, move_inputs
+from functions import move_inputs, move_outputs, parse_output_files
 
 
 if __name__ == "__main__":
@@ -13,10 +15,16 @@ if __name__ == "__main__":
     if len(glob(inputs_dir+ '/*')) > 0:
         # read the input file
         with open('inputs.json', 'r') as file:
-            data = json.load(file)
+            inputs = json.load(file)
+        with open('outputs.json', 'r') as file:
+            outputs = json.load(file)
+        with open('./outbound_shs.json') as file:
+            shs = json.load(file)
 
         # move the input files to their respective destinations
-        move_inputs(data, inputs_dir)
+        move_inputs(inputs, inputs_dir)
+        # move_outputs(outputs, inputs_dir)
+        parse_output_files(shs, inputs_dir)
     else:
         logger.critical("No files found in the inputs directory")
     

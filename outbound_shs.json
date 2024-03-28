@@ -1,0 +1,32 @@
+{
+    "itemized_statement_BD": {
+        "BotName": "Bad Debt - Printing Itemized Statement",
+        "destination": "M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY/",
+        "file_name": "YYYYMMDD_PAANS_BADDEBT_IB_BOT_OUTBOUND.xlsx",
+        "date_format": "YYYYMMDD"
+    },
+    "mr_audit": {
+        "BotName": "MRAuditPull",
+        "destination": "M:/CPP-Data/Sutherland RPA/Coding/MR AP/",
+        "file_name": "GECB_CodingMRAuditPull_Outbound_MMDDYYYY.xlsx",
+        "date_format": "MMDDYYYY"
+    },
+    "charge_correction": {
+        "BotName": "Charge Correction",
+        "destination": "M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/MMDDYYYY/",
+        "file_name": "Northwell_ChargeCorrection_Output_MMDDYYYY.xls",
+        "date_format": "MMDDYYYY"
+    },
+    "itemized_statement": {
+        "BotName": "Printing Itemized Statement",
+        "destination": "M:/FPPShare/FPP-Production/Itemized Statement HCX BOT/",
+        "file_name": "YYYYMMDD_PAANS_BOT_v2_OUTBOUND.xlsx",
+        "date_format": "YYYYMMDD"
+    },
+    "NCOA": {
+        "BotName": "Patient Address Update via NCOA",
+        "destination": "M:/FPPShare/FPP-Production/NCOA BOT/",
+        "file_name": "YYYYMMDD.NSH.NCOA_OUTBOUND.xlsx",
+        "date_format": "YYYYMMDD"
+    }
+}
