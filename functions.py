@@ -132,11 +132,6 @@ def parse_output_files(data:dict, source_dir:str):
             file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
             
             destination = destination+file_name
-            
-            file_extension = use_case_data['file_name'].split('.')[-1]
-            if file_extension == 'xlsx':
-                df.to_excel(destination, index=False)
-            if file_extension == 'xls':
-                with pd.ExcelWriter(destination, engine='openpyxl') as writer:
-                    df.to_excel(writer, sheet_name='export', index=False)
+
+            df.to_excel(destination, index=False)
         shutil.move(output_file,output_file_dest)

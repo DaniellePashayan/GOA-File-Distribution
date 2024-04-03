@@ -14,7 +14,7 @@
     "charge_correction": {
         "BotName": "Charge Correction",
         "destination": "M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/MMDDYYYY/",
-        "file_name": "Northwell_ChargeCorrection_Output_MMDDYYYY.xls",
+        "file_name": "Northwell_ChargeCorrection_Output_MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
     },
     "itemized_statement": {
