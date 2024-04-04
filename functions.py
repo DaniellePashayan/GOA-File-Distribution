@@ -132,6 +132,6 @@ def parse_output_files(data:dict, source_dir:str):
             file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
             
             destination = destination+file_name
-
-            df.to_excel(destination, index=False)
+            if os.path.exists(destination) and df.shape[0] > 0:
+                df.to_excel(destination, index=False)
         shutil.move(output_file,output_file_dest)
