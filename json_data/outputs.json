@@ -57,7 +57,7 @@
         "zip_name": "Homecare_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Medical Records"
+        "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Medical Records/"
     },
     "mr_audit": {
         "zip_name": "MRAP_Allscripts_*.zip",
