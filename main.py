@@ -11,7 +11,7 @@ if __name__ == "__main__":
     if not os.path.exists('M:/'):
         logger.critical("M Drive not connected")
     
-    inputs_dir = r'M:\CPP-Data\Sutherland RPA\Northwell Process Automation ETM Files\GOA\Inputs'
+    inputs_dir = 'M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs'
     if len(glob(inputs_dir+ '/*')) > 0:
         # read the input file
         with open('./json_data/inputs.json', 'r') as file:
