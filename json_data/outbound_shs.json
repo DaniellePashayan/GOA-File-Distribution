@@ -28,5 +28,11 @@
         "destination": "M:/FPPShare/FPP-Production/NCOA BOT/",
         "file_name": "YYYYMMDD.NSH.NCOA_OUTBOUND.xlsx",
         "date_format": "YYYYMMDD"
+    },
+    "Homecare": {
+        "BotName": "HomeCareDischarge",
+        "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Input & Output Files/",
+        "file_name": "CAREPORT_HomeCare_Outbound_MMDDYYYY.xlsx",
+        "date_format": "MMDDYYYY"
     }
 }
