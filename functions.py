@@ -89,7 +89,7 @@ def move_inputs(data: dict, source_dir: str):
                     # change the destination only
                     destination, date = extract_date_from_file_and_replace_date_in_destination(
                         file, destination, date_formatting, date_formatting_dt)
-                    destination = S_or_Z_drive(destination)
+                destination = S_or_Z_drive(destination)
                 move_single_file(file, destination)
 
 
