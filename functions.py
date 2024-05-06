@@ -81,7 +81,7 @@ def move_inputs(data: dict, source_dir: str):
         if len(files) > 0:
             for file in files:
                 # check if use_case_data['inputs']['date_formatting'] exists
-                if use_case_data['inputs'].get('date_formatting'):
+                if has_date_formatting:
                     # YYYYMMDD
                     date_formatting = use_case_data['inputs']['date_formatting']
                     # %Y%m%d
