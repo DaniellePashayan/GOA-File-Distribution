@@ -6,6 +6,7 @@ import datetime
 import re
 import pandas as pd
 from zipfile import ZipFile
+from tqdm import tqdm
 
 
 def S_or_Z_drive(destination:str) -> str:
@@ -96,12 +97,13 @@ def move_inputs(data: dict, source_dir: str):
 def move_outputs(data: dict, source_dir: str):
     logger.add("logs/outputs.log", rotation="14 days")
     for use_case, use_case_data in data.items():
-        logger.info('moving outputs for '+ use_case)
         files = glob(os.path.join(source_dir, use_case_data['zip_name']))
         logger.info(f"Found {len(files)} output files for {use_case}")
 
         if len(files) > 0:
+            logger.info('moving outputs for '+ use_case)
             for file in files:
+                # get the date from the file name so it can be used for the destination folder
                 date_formatting = use_case_data['date_formatting']
                 date_formatting_dt = use_case_data['date_formatting_dt']
                 destination = use_case_data['destination']
@@ -113,15 +115,41 @@ def move_outputs(data: dict, source_dir: str):
                     destination = f'{destination}{date.strftime(fldr_frmt)}/'
                 destination = f'{destination}{date.strftime(date_formatting_dt)}'
                 destination = S_or_Z_drive(destination)
+            
+                # unzip the files and move them to the destination
+                with open(file, 'rb') as src:
+                    zf = ZipFile(src)
+                    folder_count = [m for m in zf.infolist() if m.filename.endswith("/")].__len__()
+                    file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
+                    logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
+                    single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
+                    for single_file in tqdm(single_files):
+                        zf.extract(single_file, destination)
+                    zf.close()
                 
-                if not os.path.exists(destination):
-                    # unzip the file
-                    with ZipFile(file, 'r') as zf:
-                        zf.extractall(destination)
-                    logger.success('moved files for '+ use_case)
-                # delete zip
-                zip_dest = file.replace(source_dir, 'M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs/moved/')
-                shutil.move(file, zip_dest)
+                # confirm the destination folder has all the correct files and folders
+                new_file_count = 0
+                new_subdir_count = 0
+                for _, subdirs, files in os.walk(destination):
+                    new_file_count += len(files)
+                    new_subdir_count += len(subdirs)
+                
+                if new_file_count == file_count and new_subdir_count == folder_count:
+                    logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
+                elif new_file_count != file_count:
+                    logger.critical(f"Failed to move all files to {destination}")
+                elif new_subdir_count != folder_count:
+                    logger.critical(f"Failed to move all subdirectories to {destination}")
+                
+                # move the folder to the moved folder
+                file_name = file.split('\\')[-1]
+                pre_moved_folder_path = f'{source_dir}/{file_name}'
+                moved_folder_date = date.strftime('%Y %m')
+                moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/{file_name}'
+                try:
+                    os.rename(pre_moved_folder_path, moved_folder_dir)
+                except FileExistsError:
+                    logger.warning(f'{moved_folder_dir} already exists')
 
 def parse_output_files(data:dict, source_dir:str):
     output_files = glob(source_dir + "/Outbound*.xlsx")
