@@ -145,7 +145,10 @@ def move_outputs(data: dict, source_dir: str):
                 file_name = file.split('\\')[-1]
                 pre_moved_folder_path = f'{source_dir}/{file_name}'
                 moved_folder_date = date.strftime('%Y %m')
-                moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/{file_name}'
+                moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
+                # make folder if not exists
+                os.makedirs(moved_folder_dir)
+                moved_folder_dir = f'{moved_folder_dir}/{file_name}'
                 try:
                     os.rename(pre_moved_folder_path, moved_folder_dir)
                 except FileExistsError:
