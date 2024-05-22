@@ -141,7 +141,7 @@
   },
   "ncoa": {
     "inputs": {
-      "name": "*.NSH.NCOA*_INBOUND.csv",
+      "name": "*.NSH.NCOA*.csv",
       "destination": "M:/FPPShare/FPP-Production/NCOA BOT"
     }
   },
