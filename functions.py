@@ -134,25 +134,31 @@ def move_outputs(data: dict, source_dir: str):
                     new_file_count += len(files)
                     new_subdir_count += len(subdirs)
                 
-                if new_file_count == file_count and new_subdir_count == folder_count:
+                if new_file_count >= file_count and new_subdir_count >= folder_count:
                     logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
-                elif new_file_count != file_count:
+                    if new_file_count == file_count and new_subdir_count == folder_count:
+                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                    else:
+                        logger.warning(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                    
+                    # move the folder to the moved folder
+                    file_name = file.split('\\')[-1]
+                    pre_moved_folder_path = f'{source_dir}/{file_name}'
+                    moved_folder_date = date.strftime('%Y %m')
+                    moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
+                    # make folder if not exists
+                    os.makedirs(moved_folder_dir, exist_ok=True)
+                    moved_folder_dir = f'{moved_folder_dir}/{file_name}'
+                    
+                    try:
+                        os.rename(pre_moved_folder_path, moved_folder_dir)
+                    except FileExistsError:
+                        logger.warning(f'{moved_folder_dir} already exists')
+                elif new_file_count < file_count:
                     logger.critical(f"Failed to move all files to {destination}")
-                elif new_subdir_count != folder_count:
+                    logger.critical(f"Expected {file_count} files but only found {new_file_count}")
+                elif new_subdir_count < folder_count:
                     logger.critical(f"Failed to move all subdirectories to {destination}")
-                
-                # move the folder to the moved folder
-                file_name = file.split('\\')[-1]
-                pre_moved_folder_path = f'{source_dir}/{file_name}'
-                moved_folder_date = date.strftime('%Y %m')
-                moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
-                # make folder if not exists
-                os.makedirs(moved_folder_dir)
-                moved_folder_dir = f'{moved_folder_dir}/{file_name}'
-                try:
-                    os.rename(pre_moved_folder_path, moved_folder_dir)
-                except FileExistsError:
-                    logger.warning(f'{moved_folder_dir} already exists')
 
 def parse_output_files(data:dict, source_dir:str):
     output_files = glob(source_dir + "/Outbound*.xlsx")
