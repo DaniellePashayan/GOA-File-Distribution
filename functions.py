@@ -135,11 +135,12 @@ def move_outputs(data: dict, source_dir: str):
                     new_subdir_count += len(subdirs)
                 
                 if new_file_count >= file_count and new_subdir_count >= folder_count:
-                    logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
                     if new_file_count == file_count and new_subdir_count == folder_count:
+                        logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
                         logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
                     else:
-                        logger.warning(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                        logger.warning(f'Moved {folder_count} folders and {file_count} files into the destination')
+                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
                     
                     # move the folder to the moved folder
                     file_name = file.split('\\')[-1]
