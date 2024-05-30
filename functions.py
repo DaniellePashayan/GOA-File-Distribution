@@ -68,10 +68,10 @@ def extract_date_from_file_and_replace_date_in_destination(file_name: str, desti
 
 def move_inputs(data: dict, source_dir: str):
     # setup the logging
-    logger.add("logs/inputs.log", rotation="14 days")
+    logger.add("M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs/logs/inputs.log", rotation="7 day", level="INFO")
 
     for use_case, use_case_data in data.items():
-        logger.info(f"Moving files for {use_case}")
+        logger.info(f'---------{use_case} inputs---------')
         file_name = use_case_data['inputs']['name']
         destination = use_case_data['inputs']['destination']
         has_date_formatting = True if use_case_data['inputs'].get(
@@ -95,13 +95,13 @@ def move_inputs(data: dict, source_dir: str):
 
 
 def move_outputs(data: dict, source_dir: str):
-    logger.add("logs/outputs.log", rotation="14 days")
+    logger.add("M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs/logs/outputs.log", rotation="7 day", level="INFO")
     for use_case, use_case_data in data.items():
         files = glob(os.path.join(source_dir, use_case_data['zip_name']))
         logger.info(f"Found {len(files)} output files for {use_case}")
 
         if len(files) > 0:
-            logger.info('moving outputs for '+ use_case)
+            logger.info(f'---------{use_case} outputs---------')
             for file in files:
                 # get the date from the file name so it can be used for the destination folder
                 date_formatting = use_case_data['date_formatting']
@@ -180,10 +180,7 @@ def parse_output_files(data:dict, source_dir:str):
                 
             file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
             folder = destination
-            print(folder)
             destination = destination+file_name
-            print(destination)
             if os.path.exists(folder) and df.shape[0] > 0:
                 df.to_excel(destination, index=False, sheet_name='export')
-                print('saved')
         shutil.move(output_file,output_file_dest)
