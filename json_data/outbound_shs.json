@@ -34,5 +34,11 @@
         "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Input & Output Files/",
         "file_name": "CAREPORT_HomeCare_Outbound_MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
+    },
+    "LabAppeal": {
+        "BotName": "LabAppeals",
+        "destination": "T:/RPA Medical Records Denials/Bot Output Files/",
+        "file_name": "Labappeals Output - MMDDYYYY.xlsx",
+        "date_format": "MMDDYYYY"
     }
 }

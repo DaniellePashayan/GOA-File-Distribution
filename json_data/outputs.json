@@ -64,5 +64,11 @@
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
         "destination": "M:/Coding-Reimbursement/YYYY/Coding Quality Review Team/MR AP/MM YYYY/"
+    },
+    "lab_appeals": {
+        "zip_name": "Labappeals_*.zip",
+        "date_formatting": "MM_DD_YY",
+        "date_formatting_dt": "%m_%d_%y",
+        "destination": "T:/RPA Medical Records Denials/Patient Documents/Bot - Saved Records/YYYY/MM YYYY/"
     }
 }
