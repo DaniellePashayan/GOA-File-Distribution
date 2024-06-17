@@ -127,6 +127,9 @@ def move_outputs(data: dict, source_dir: str):
                         zf.extract(single_file, destination)
                     zf.close()
                 
+                if use_case == 'lab_appeals':
+                    lab_appeals_merged(use_case_data, destination, date)
+                
                 # confirm the destination folder has all the correct files and folders
                 new_file_count = 0
                 new_subdir_count = 0
@@ -150,9 +153,6 @@ def move_outputs(data: dict, source_dir: str):
                     # make folder if not exists
                     os.makedirs(moved_folder_dir, exist_ok=True)
                     moved_folder_dir = f'{moved_folder_dir}/{file_name}'
-                    
-                    if use_case == 'lab_appeals':
-                        lab_appeals_merged(use_case_data, destination, date)
                     
                     try:
                         os.rename(pre_moved_folder_path, moved_folder_dir)
@@ -191,9 +191,6 @@ def parse_output_files(data:dict, source_dir:str):
 def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     logger.info(f'----------lab appeals merged files---------')
     date_formatting_dt = data['date_formatting_dt']
-    destination = data['destination']
-    
-    destination += date.strftime(date_formatting_dt)
     
     merged_date = date.strftime('%m_%d_%y')
     merged_date_full_year = date.strftime('%m_%d_%Y')
