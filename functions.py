@@ -39,9 +39,9 @@ def move_single_file(source: str, destination: str):
 def extract_date_from_file_and_replace_date_in_destination(file_name: str, destination: str, date_formatting: str, date_formatting_dt: str, create_folder = True):
     # check if "_" exists in date_formatting:
     if "_" not in date_formatting:
-        regex_search = "(\d{"+str(len(date_formatting))+"})"
+        regex_search = r"(\d{"+str(len(date_formatting))+"})"
     else:
-        regex_search = "(\d{2}(_)\d{2}(_)\d{2})"
+        regex_search = r"(\d{2}(_)\d{2}(_)\d{2})"
     match = re.search(regex_search, file_name)
     if match:
         date = match.group(0)
@@ -151,6 +151,9 @@ def move_outputs(data: dict, source_dir: str):
                     os.makedirs(moved_folder_dir, exist_ok=True)
                     moved_folder_dir = f'{moved_folder_dir}/{file_name}'
                     
+                    if use_case == 'lab_appeals':
+                        lab_appeals_merged(use_case_data, destination, date)
+                    
                     try:
                         os.rename(pre_moved_folder_path, moved_folder_dir)
                     except FileExistsError:
@@ -184,3 +187,21 @@ def parse_output_files(data:dict, source_dir:str):
             if os.path.exists(folder) and df.shape[0] > 0:
                 df.to_excel(destination, index=False, sheet_name='export')
         shutil.move(output_file,output_file_dest)
+        
+def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
+    logger.info(f'----------lab appeals merged files---------')
+    date_formatting_dt = data['date_formatting_dt']
+    destination = data['destination']
+    
+    destination += date.strftime(date_formatting_dt)
+    
+    merged_date = date.strftime('%m_%d_%y')
+    merged_date_full_year = date.strftime('%m_%d_%Y')
+    merged_path = f'M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Lab Appeals/{merged_date}/Labappeals_{merged_date_full_year}.zip'
+    try:
+        zf = ZipFile(merged_path)
+        folders = [m for m in zf.namelist() if not m.endswith("/") and "_Merged" in m]
+        for folder in tqdm(folders):
+            zf.extract(folder, destination)
+    except FileNotFoundError:
+        logger.critical(f'Lab Appeals Merged file not found for {date.strftime(date_formatting_dt)}')
