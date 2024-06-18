@@ -3,55 +3,55 @@
         "zip_name": "Allscripts_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/MedicalRecords/Allscripts/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\Allscripts\\YYYY\\MM YYYY\\"
     },
     "aehr_oc": {
         "zip_name": "AllscriptsOnC_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/MedicalRecords/OC WCNF Records/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/MedicalRecords/OC WCNF Records/YYYY/MM YYYY/"
     },
     "bcbs_bundling": {
         "zip_name": "BCBSClearClaimConnection_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/Bundling/BCBSClearClaimConnection/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Bundling/BCBSClearClaimConnection/YYYY/MM YYYY/"
     },
     "mckesson_bundling": {
         "zip_name": "McKesson_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/Bundling/McKesson/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Bundling/McKesson/YYYY/MM YYYY/"
     },
     "uhc_bundling": {
         "zip_name": "UHCBundling_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/Bundling/UHCBundling/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Bundling/UHCBundling/YYYY/MM YYYY/"
     },
     "chargecorrection": {
         "zip_name": "ChargeCorrection_*.zip",
         "date_formatting": "YYMMDD",
         "date_formatting_dt": "%y%m%d",
-        "destination": "M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/"
     },
     "codify": {
         "zip_name": "Codify_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/Bundling/Codify/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Bundling/Codify/YYYY/MM YYYY/"
     },
     "powersign": {
         "zip_name": "Powersign_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/MedicalRecords/Powersign/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/MedicalRecords/Powersign/YYYY/MM YYYY/"
     },
     "sunrise": {
         "zip_name": "Sunrise_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/CPP-Data/Sutherland RPA/MedicalRecords/Sunrise/YYYY/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/MedicalRecords/Sunrise/YYYY/MM YYYY/"
     },
     "homecare": {
         "zip_name": "Homecare_*.zip",
@@ -63,7 +63,7 @@
         "zip_name": "MRAP_Allscripts_*.zip",
         "date_formatting": "MM_DD_YY",
         "date_formatting_dt": "%m_%d_%y",
-        "destination": "M:/Coding-Reimbursement/YYYY/Coding Quality Review Team/MR AP/MM YYYY/"
+        "destination": "\\NT2KWB972SRV03/SHAREDATA/Coding-Reimbursement/YYYY/Coding Quality Review Team/MR AP/MM YYYY/"
     },
     "lab_appeals": {
         "zip_name": "Labappeals_*.zip",
