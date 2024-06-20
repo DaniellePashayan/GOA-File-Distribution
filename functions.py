@@ -38,10 +38,15 @@ def move_single_file(source: str, destination: str):
 
 def extract_date_from_file_and_replace_date_in_destination(file_name: str, destination: str, date_formatting: str, date_formatting_dt: str, create_folder = True):
     # check if "_" exists in date_formatting:
-    if "_" not in date_formatting:
+    if " " in date_formatting: # checks for dates in MM DD YYYY format
+        regex_search = r"(\d{2}(\s)\d{2}(\s)\d{4})"
+    elif "_" not in date_formatting: # checks for dates in MMDDYYYY format
         regex_search = r"(\d{"+str(len(date_formatting))+"})"
-    else:
+    elif len(date_formatting) == 8: # checks for dates in MM_DD_YY format
         regex_search = r"(\d{2}(_)\d{2}(_)\d{2})"
+    elif len(date_formatting) == 10: # checks for dates in MM_DD_YYYY format
+        regex_search = r"(\d{2}(_)\d{2}(_)\d{4})"
+            
     match = re.search(regex_search, file_name)
     if match:
         date = match.group(0)
@@ -55,6 +60,8 @@ def extract_date_from_file_and_replace_date_in_destination(file_name: str, desti
         # replace date in destination with date
         destination = destination.replace(
             "YYYY", str(year))
+        destination = destination.replace(
+            "YY", str(year)[2:])
         destination = destination.replace(
             "MM", str(month).zfill(2))
         destination = destination.replace(
@@ -165,6 +172,16 @@ def move_outputs(data: dict, source_dir: str):
                     logger.critical(f"Failed to move all subdirectories to {destination}")
 
 def parse_output_files(data:dict, source_dir:str):
+    
+    lab_outputs = glob(source_dir + "/Labappeals Output*.xlsx")
+    if len(lab_outputs) > 0:
+        logger.info(f'parsing lab appeals output file')
+        for output_file in lab_outputs:
+            destination, date = extract_date_from_file_and_replace_date_in_destination(output_file, 'T:/RPA Medical Records Denials/Bot Output Files', 'MM DD YYYY', '%m %d %Y', create_folder=False)
+            file_name_base = os.path.basename(output_file).split(' - ')[0]
+            file_name = file_name_base + " - " + date.strftime('%m%d%Y') + "test.xlsx"
+            shutil.move(output_file,f'{destination}/{file_name}')
+    
     output_files = glob(source_dir + "/Outbound*.xlsx")
     for output_file in output_files:
         main = pd.read_excel(output_file, sheet_name='export')
@@ -190,6 +207,7 @@ def parse_output_files(data:dict, source_dir:str):
         
 def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     logger.info(f'----------lab appeals merged files---------')
+    print(date)
     date_formatting_dt = data['date_formatting_dt']
     
     merged_date = date.strftime('%m_%d_%y')
