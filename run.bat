@@ -15,4 +15,3 @@ IF ERRORLEVEL 1 (
     pause
 )
 ENDLOCAL
-pause
