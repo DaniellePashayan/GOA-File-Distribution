@@ -7,11 +7,33 @@ from functions import move_inputs, move_outputs, parse_output_files
 
 
 if __name__ == "__main__":
-    # check if connected to MDrive
-    if not os.path.exists('M:/'):
-        logger.critical("M Drive not connected")
+
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     
-    inputs_dir = 'M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs'
+    logger.add('.\\logs\\local_log.log', level="INFO")
+    logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\inputs.log",
+               rotation="7 day", level="INFO")
+    logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\outputs.log",
+               rotation="7 day", level="INFO")
+
+    drives = {
+        "M": "\\\\NT2KWB972SRV03\\SHAREDATA",
+        "N": "\\\\NASDATA204\\SHAREDATA\\BOT CLAIMSTATUS DATA-PHI",
+        "S": "\\\\NASHCN01\\SHAREDATA",
+        "Y": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED",
+        "T": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING"
+    }
+
+    # check if all drives are connected
+    for drive_letter, drive_path in drives.items():
+        logger.info(f"Checking if drive {drive_letter} is connected")
+        logger.info(os.path.exists(drive_path))
+        if not os.path.exists(drive_path):
+            logger.info(f"Drive {drive_letter} is not connected")
+        else:
+            logger.info("All drives are connected")
+
+    inputs_dir = '\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs'
     if len(glob(inputs_dir+ '/*')) > 0:
         # read the input file
         with open('./json_data/inputs.json', 'r') as file:
@@ -27,5 +49,3 @@ if __name__ == "__main__":
         move_outputs(outputs, inputs_dir)
     else:
         logger.critical("No files found in the inputs directory")
-    
-  
