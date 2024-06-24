@@ -9,12 +9,6 @@ from zipfile import ZipFile
 from tqdm import tqdm
 
 
-def S_or_Z_drive(destination:str) -> str:
-    if os.path.exists('Z:/') and 'S:/' in destination:
-        return destination.replace('S:/','Z:/')
-    return destination
-    
-
 def move_single_file(source: str, destination: str):
     source = str(source)
     source_dir = os.path.dirname(source)
@@ -75,8 +69,6 @@ def extract_date_from_file_and_replace_date_in_destination(file_name: str, desti
 
 def move_inputs(data: dict, source_dir: str):
     # setup the logging
-    logger.add("M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs/logs/inputs.log", rotation="7 day", level="INFO")
-
     for use_case, use_case_data in data.items():
         logger.info(f'---------{use_case} inputs---------')
         file_name = use_case_data['inputs']['name']
@@ -97,12 +89,11 @@ def move_inputs(data: dict, source_dir: str):
                     # change the destination only
                     destination, date = extract_date_from_file_and_replace_date_in_destination(
                         file, destination, date_formatting, date_formatting_dt)
-                destination = S_or_Z_drive(destination)
                 move_single_file(file, destination)
 
 
 def move_outputs(data: dict, source_dir: str):
-    logger.add("M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Inputs/logs/outputs.log", rotation="7 day", level="INFO")
+    
     for use_case, use_case_data in data.items():
         files = glob(os.path.join(source_dir, use_case_data['zip_name']))
         logger.info(f"Found {len(files)} output files for {use_case}")
@@ -121,7 +112,6 @@ def move_outputs(data: dict, source_dir: str):
                     fldr_frmt = '%m%d%Y'
                     destination = f'{destination}{date.strftime(fldr_frmt)}/'
                 destination = f'{destination}{date.strftime(date_formatting_dt)}'
-                destination = S_or_Z_drive(destination)
             
                 # unzip the files and move them to the destination
                 with open(file, 'rb') as src:
@@ -177,15 +167,15 @@ def parse_output_files(data:dict, source_dir:str):
     if len(lab_outputs) > 0:
         logger.info(f'parsing lab appeals output file')
         for output_file in lab_outputs:
-            destination, date = extract_date_from_file_and_replace_date_in_destination(output_file, 'T:/RPA Medical Records Denials/Bot Output Files', 'MM DD YYYY', '%m %d %Y', create_folder=False)
+            destination, date = extract_date_from_file_and_replace_date_in_destination(output_file, '\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING\\RPA Medical Records Denials\\Bot Output Files', 'MM DD YYYY', '%m %d %Y', create_folder=False)
             file_name_base = os.path.basename(output_file).split(' - ')[0]
-            file_name = file_name_base + " - " + date.strftime('%m%d%Y') + "test.xlsx"
+            file_name = file_name_base + " - " + date.strftime('%m%d%Y') + ".xlsx"
             shutil.move(output_file,f'{destination}/{file_name}')
     
     output_files = glob(source_dir + "/Outbound*.xlsx")
     for output_file in output_files:
         main = pd.read_excel(output_file, sheet_name='export')
-        output_file_dest = output_file.replace(source_dir,'M:/CPP-Data/Sutherland RPA/Combined Outputs')
+        output_file_dest = output_file.replace(source_dir,'\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs')
         for use_case, use_case_data in data.items():
             logger.info(f'parsing output file for {use_case}')
             df = main[main['BotName'] == use_case_data['BotName']]
@@ -194,7 +184,6 @@ def parse_output_files(data:dict, source_dir:str):
             date_formatting_dt = '%m%d%Y'
                 
             destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt, create_folder=False)
-            destination = S_or_Z_drive(destination)
             
             date_format = use_case_data['date_format'].replace("YYYY", str(date.year)).replace("MM", str(date.month).zfill(2)).replace("DD", str(date.day).zfill(2))
                 
@@ -212,7 +201,7 @@ def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     
     merged_date = date.strftime('%m_%d_%y')
     merged_date_full_year = date.strftime('%m_%d_%Y')
-    merged_path = f'M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/GOA/Lab Appeals/{merged_date}/Labappeals_{merged_date_full_year}.zip'
+    merged_path = f'\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Lab Appeals\\{merged_date}\\Labappeals_{merged_date_full_year}.zip'
     try:
         zf = ZipFile(merged_path)
         folders = [m for m in zf.namelist() if not m.endswith("/") and "_Merged" in m]
