@@ -2,7 +2,7 @@ echo "Running GOA File Distribution"
 @Echo off
 
 SETLOCAL
-cd "C:\Users\pa_dpashayan\Desktop\Python Projects\GOA-File-Distribution"
+cd "C:\Users\pa_dpashayan\Desktop\PyProjects\GOA-File-Distribution"
 set FILE_PATH=%~dp0
 set SCRIPT_PATH=%FILE_PATH%main.py
 set VENV_PATH=%FILE_PATH%.venv
