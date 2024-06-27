@@ -17,11 +17,11 @@ if __name__ == "__main__":
                rotation="7 day", level="INFO")
 
     drives = {
-        "M": "\\\\NT2KWB972SRV03\\SHAREDATA",
-        "N": "\\\\NASDATA204\\SHAREDATA\\BOT CLAIMSTATUS DATA-PHI",
-        "S": "\\\\NASHCN01\\SHAREDATA",
-        "Y": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED",
-        "T": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING"
+        "M": r"\\NT2KWB972SRV03\SHAREDATA",
+        "N": r"\\NASDATA204\SHAREDATA\BOT CLAIMSTATUS DATA-PHI",
+        "S": r"\\NASHCN01\SHAREDATA",
+        "Y": r"\\NASDATA201\SHAREDATA\MV-RCR01\SHARED",
+        "T": r"\\NASDATA201\SHAREDATA\NSHS-CENTRAL-LAB\SHARED\BILLING"
     }
 
     # check if all drives are connected
