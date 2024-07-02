@@ -120,7 +120,7 @@ def move_outputs(data: dict, source_dir: str):
                     file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
                     logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
                     single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
-                    for single_file in tqdm(single_files):
+                    for single_file in single_files:
                         zf.extract(single_file, destination)
                     zf.close()
                 
@@ -205,7 +205,7 @@ def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     try:
         zf = ZipFile(merged_path)
         folders = [m for m in zf.namelist() if not m.endswith("/") and "_Merged" in m]
-        for folder in tqdm(folders):
+        for folder in folders:
             zf.extract(folder, destination)
     except FileNotFoundError:
         logger.critical(f'Lab Appeals Merged file not found for {date.strftime(date_formatting_dt)}')
