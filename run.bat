@@ -11,7 +11,6 @@ call "%VENV_PATH%\Scripts\activate.bat"
 python -u "%SCRIPT_PATH%" > logs\TS_log.txt 2>&1
 
 IF ERRORLEVEL 1 (
-    echo Python script encountered an error. The error message is: %ERRORLEVEL%
-    pause
+    echo Python script encountered an error. The error message is: %ERRORLEVEL% %ERRORMESSAGE%
 )
 ENDLOCAL
