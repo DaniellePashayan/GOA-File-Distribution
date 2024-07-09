@@ -155,6 +155,9 @@ def move_outputs(data: dict, source_dir: str):
                         os.rename(pre_moved_folder_path, moved_folder_dir)
                     except FileExistsError:
                         logger.warning(f'{moved_folder_dir} already exists')
+                    except PermissionError:
+                        logger.critical(f'Permission denied to move {pre_moved_folder_path}')
+                        continue
                 elif new_file_count < file_count:
                     logger.critical(f"Failed to move all files to {destination}")
                     logger.critical(f"Expected {file_count} files but only found {new_file_count}")
