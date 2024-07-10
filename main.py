@@ -8,44 +8,47 @@ from functions import move_inputs, move_outputs, parse_output_files
 
 if __name__ == "__main__":
 
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    
-    logger.add('.\\logs\\local_log.log', level="INFO")
-    logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\inputs.log",
-               rotation="7 day", level="INFO")
-    logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\outputs.log",
-               rotation="7 day", level="INFO")
+    try:
+        os.chdir(os.path.dirname(os.path.abspath(__file__)))
+        
+        logger.add('.\\logs\\local_log.log', level="INFO")
+        logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\inputs.log",
+                rotation="7 day", level="INFO")
+        logger.add("\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs\\logs\\outputs.log",
+                rotation="7 day", level="INFO")
 
-    drives = {
-        "M": r"\\NT2KWB972SRV03\SHAREDATA",
-        "N": r"\\NASDATA204\SHAREDATA\BOT CLAIMSTATUS DATA-PHI",
-        "S": r"\\NASHCN01\SHAREDATA",
-        "Y": r"\\NASDATA201\SHAREDATA\MV-RCR01\SHARED",
-        "T": r"\\NASDATA201\SHAREDATA\NSHS-CENTRAL-LAB\SHARED\BILLING"
-    }
+        drives = {
+            "M": r"\\NT2KWB972SRV03\SHAREDATA",
+            "N": r"\\NASDATA204\SHAREDATA\BOT CLAIMSTATUS DATA-PHI",
+            "S": r"\\NASHCN01\SHAREDATA",
+            "Y": r"\\NASDATA201\SHAREDATA\MV-RCR01\SHARED",
+            "T": r"\\NASDATA201\SHAREDATA\NSHS-CENTRAL-LAB\SHARED\BILLING"
+        }
 
-    # check if all drives are connected
-    for drive_letter, drive_path in drives.items():
-        logger.info(f"Checking if drive {drive_letter} is connected")
-        logger.info(os.path.exists(drive_path))
-        if not os.path.exists(drive_path):
-            logger.info(f"Drive {drive_letter} is not connected")
+        # check if all drives are connected
+        for drive_letter, drive_path in drives.items():
+            logger.info(f"Checking if drive {drive_letter} is connected")
+            logger.info(os.path.exists(drive_path))
+            if not os.path.exists(drive_path):
+                logger.info(f"Drive {drive_letter} is not connected")
+            else:
+                logger.info("All drives are connected")
+
+        inputs_dir = '\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs'
+        if len(glob(inputs_dir+ '/*')) > 0:
+            # read the input file
+            with open('./json_data/inputs.json', 'r') as file:
+                inputs = json.load(file)
+            with open('./json_data/outputs.json', 'r') as file:
+                outputs = json.load(file)
+            with open('./json_data/outbound_shs.json') as file:
+                shs = json.load(file)
+
+            # move the input files to their respective destinations
+            move_inputs(inputs, inputs_dir)
+            parse_output_files(shs, inputs_dir)
+            move_outputs(outputs, inputs_dir)
         else:
-            logger.info("All drives are connected")
-
-    inputs_dir = '\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\GOA\\Inputs'
-    if len(glob(inputs_dir+ '/*')) > 0:
-        # read the input file
-        with open('./json_data/inputs.json', 'r') as file:
-            inputs = json.load(file)
-        with open('./json_data/outputs.json', 'r') as file:
-            outputs = json.load(file)
-        with open('./json_data/outbound_shs.json') as file:
-            shs = json.load(file)
-
-        # move the input files to their respective destinations
-        move_inputs(inputs, inputs_dir)
-        parse_output_files(shs, inputs_dir)
-        move_outputs(outputs, inputs_dir)
-    else:
-        logger.critical("No files found in the inputs directory")
+            logger.critical("No files found in the inputs directory")
+    except Exception as e:
+        logger.exception(e)
