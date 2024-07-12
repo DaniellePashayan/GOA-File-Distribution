@@ -77,19 +77,22 @@ def move_inputs(data: dict, source_dir: str):
             'date_formatting') else False
         files = glob(f"{source_dir}/{file_name}")
         logger.info(f"Found {len(files)} files for {use_case}")
-
         if len(files) > 0:
-            for file in files:
-                # check if use_case_data['inputs']['date_formatting'] exists
-                if has_date_formatting:
-                    # YYYYMMDD
-                    date_formatting = use_case_data['inputs']['date_formatting']
-                    # %Y%m%d
-                    date_formatting_dt = use_case_data['inputs']['date_formatting_dt']
-                    # change the destination only
-                    destination, date = extract_date_from_file_and_replace_date_in_destination(
-                        file, destination, date_formatting, date_formatting_dt)
-                move_single_file(file, destination)
+            try:
+                for file in files:
+                    # check if use_case_data['inputs']['date_formatting'] exists
+                    if has_date_formatting:
+                        # YYYYMMDD
+                        date_formatting = use_case_data['inputs']['date_formatting']
+                        # %Y%m%d
+                        date_formatting_dt = use_case_data['inputs']['date_formatting_dt']
+                        # change the destination only
+                        destination, date = extract_date_from_file_and_replace_date_in_destination(
+                            file, destination, date_formatting, date_formatting_dt)
+                    move_single_file(file, destination)
+            except Exception as e:
+                logger.critical(f"Error: {e} with {file} in {source_dir}")
+                continue
 
 
 def move_outputs(data: dict, source_dir: str):
@@ -100,69 +103,73 @@ def move_outputs(data: dict, source_dir: str):
 
         if len(files) > 0:
             logger.info(f'---------{use_case} outputs---------')
-            for file in files:
-                # get the date from the file name so it can be used for the destination folder
-                date_formatting = use_case_data['date_formatting']
-                date_formatting_dt = use_case_data['date_formatting_dt']
-                destination = use_case_data['destination']
-                destination, date = extract_date_from_file_and_replace_date_in_destination(
-                    file, destination, date_formatting, date_formatting_dt)
+            try:
+                for file in files:
+                    # get the date from the file name so it can be used for the destination folder
+                    date_formatting = use_case_data['date_formatting']
+                    date_formatting_dt = use_case_data['date_formatting_dt']
+                    destination = use_case_data['destination']
+                    destination, date = extract_date_from_file_and_replace_date_in_destination(
+                        file, destination, date_formatting, date_formatting_dt)
 
-                if use_case == 'chargecorrection':
-                    fldr_frmt = '%m%d%Y'
-                    destination = f'{destination}{date.strftime(fldr_frmt)}/'
-                destination = f'{destination}{date.strftime(date_formatting_dt)}'
-            
-                # unzip the files and move them to the destination
-                with open(file, 'rb') as src:
-                    zf = ZipFile(src)
-                    folder_count = [m for m in zf.infolist() if m.filename.endswith("/")].__len__()
-                    file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
-                    logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
-                    single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
-                    for single_file in single_files:
-                        zf.extract(single_file, destination)
-                    zf.close()
+                    if use_case == 'chargecorrection':
+                        fldr_frmt = '%m%d%Y'
+                        destination = f'{destination}{date.strftime(fldr_frmt)}/'
+                    destination = f'{destination}{date.strftime(date_formatting_dt)}'
                 
-                if use_case == 'lab_appeals':
-                    lab_appeals_merged(use_case_data, destination, date)
-                
-                # confirm the destination folder has all the correct files and folders
-                new_file_count = 0
-                new_subdir_count = 0
-                for _, subdirs, files in os.walk(destination):
-                    new_file_count += len(files)
-                    new_subdir_count += len(subdirs)
-                
-                if new_file_count >= file_count and new_subdir_count >= folder_count:
-                    if new_file_count == file_count and new_subdir_count == folder_count:
-                        logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
-                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
-                    else:
-                        logger.warning(f'Moved {folder_count} folders and {file_count} files into the destination')
-                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                    # unzip the files and move them to the destination
+                    with open(file, 'rb') as src:
+                        zf = ZipFile(src)
+                        folder_count = [m for m in zf.infolist() if m.filename.endswith("/")].__len__()
+                        file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
+                        logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
+                        single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
+                        for single_file in single_files:
+                            zf.extract(single_file, destination)
+                        zf.close()
                     
-                    # move the folder to the moved folder
-                    file_name = file.split('\\')[-1]
-                    pre_moved_folder_path = f'{source_dir}/{file_name}'
-                    moved_folder_date = date.strftime('%Y %m')
-                    moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
-                    # make folder if not exists
-                    os.makedirs(moved_folder_dir, exist_ok=True)
-                    moved_folder_dir = f'{moved_folder_dir}/{file_name}'
+                    if use_case == 'lab_appeals':
+                        lab_appeals_merged(use_case_data, destination, date)
                     
-                    try:
-                        os.rename(pre_moved_folder_path, moved_folder_dir)
-                    except FileExistsError:
-                        logger.warning(f'{moved_folder_dir} already exists')
-                    except PermissionError:
-                        logger.critical(f'Permission denied to move {pre_moved_folder_path}')
-                        continue
-                elif new_file_count < file_count:
-                    logger.critical(f"Failed to move all files to {destination}")
-                    logger.critical(f"Expected {file_count} files but only found {new_file_count}")
-                elif new_subdir_count < folder_count:
-                    logger.critical(f"Failed to move all subdirectories to {destination}")
+                    # confirm the destination folder has all the correct files and folders
+                    new_file_count = 0
+                    new_subdir_count = 0
+                    for _, subdirs, files in os.walk(destination):
+                        new_file_count += len(files)
+                        new_subdir_count += len(subdirs)
+                    
+                    if new_file_count >= file_count and new_subdir_count >= folder_count:
+                        if new_file_count == file_count and new_subdir_count == folder_count:
+                            logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
+                            logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                        else:
+                            logger.warning(f'Moved {folder_count} folders and {file_count} files into the destination')
+                            logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
+                        
+                        # move the folder to the moved folder
+                        file_name = file.split('\\')[-1]
+                        pre_moved_folder_path = f'{source_dir}/{file_name}'
+                        moved_folder_date = date.strftime('%Y %m')
+                        moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
+                        # make folder if not exists
+                        os.makedirs(moved_folder_dir, exist_ok=True)
+                        moved_folder_dir = f'{moved_folder_dir}/{file_name}'
+                        
+                        try:
+                            os.rename(pre_moved_folder_path, moved_folder_dir)
+                        except FileExistsError:
+                            logger.warning(f'{moved_folder_dir} already exists')
+                        except PermissionError:
+                            logger.critical(f'Permission denied to move {pre_moved_folder_path}')
+                            continue
+                    elif new_file_count < file_count:
+                        logger.critical(f"Failed to move all files to {destination}")
+                        logger.critical(f"Expected {file_count} files but only found {new_file_count}")
+                    elif new_subdir_count < folder_count:
+                        logger.critical(f"Failed to move all subdirectories to {destination}")
+            except Exception as e:
+                logger.critical(f"Error: {e} with {file} in {source_dir}")
+                continue
 
 def parse_output_files(data:dict, source_dir:str):
     
@@ -177,25 +184,29 @@ def parse_output_files(data:dict, source_dir:str):
     
     output_files = glob(source_dir + "/Outbound*.xlsx")
     for output_file in output_files:
-        main = pd.read_excel(output_file, sheet_name='export')
-        output_file_dest = output_file.replace(source_dir,'\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs')
-        for use_case, use_case_data in data.items():
-            logger.info(f'parsing output file for {use_case}')
-            df = main[main['BotName'] == use_case_data['BotName']]
-            
-            date_formatting = 'MMDDYYYY'
-            date_formatting_dt = '%m%d%Y'
+        try:
+            main = pd.read_excel(output_file, sheet_name='export')
+            output_file_dest = output_file.replace(source_dir,'\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs')
+            for use_case, use_case_data in data.items():
+                logger.info(f'parsing output file for {use_case}')
+                df = main[main['BotName'] == use_case_data['BotName']]
                 
-            destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt, create_folder=False)
-            
-            date_format = use_case_data['date_format'].replace("YYYY", str(date.year)).replace("MM", str(date.month).zfill(2)).replace("DD", str(date.day).zfill(2))
+                date_formatting = 'MMDDYYYY'
+                date_formatting_dt = '%m%d%Y'
+                    
+                destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt, create_folder=False)
                 
-            file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
-            folder = destination
-            destination = destination+file_name
-            if os.path.exists(folder) and df.shape[0] > 0:
-                df.to_excel(destination, index=False, sheet_name='export')
-        shutil.move(output_file,output_file_dest)
+                date_format = use_case_data['date_format'].replace("YYYY", str(date.year)).replace("MM", str(date.month).zfill(2)).replace("DD", str(date.day).zfill(2))
+                    
+                file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
+                folder = destination
+                destination = destination+file_name
+                if os.path.exists(folder) and df.shape[0] > 0:
+                    df.to_excel(destination, index=False, sheet_name='export')
+            shutil.move(output_file,output_file_dest)
+        except Exception as e:
+            logger.critical(f"Error: {e} with {output_file} in {source_dir}")
+            continue
         
 def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     logger.info(f'----------lab appeals merged files---------')
