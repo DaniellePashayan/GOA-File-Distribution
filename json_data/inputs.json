@@ -2,97 +2,97 @@
   "bcbs sm": {
     "inputs": {
       "name": "GECB_BCBSSM_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/BCBS Secure Messaging"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\BCBS Secure Messaging"
     }
   },
   "codify": {
     "inputs": {
       "name": "GECB_Bundling_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Bundling"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\Bundling"
     }
   },
   "echo": {
     "inputs": {
       "name": "GECB_ECHO_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/ECHO"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\ECHO"
     }
   },
   "aehr oc": {
     "inputs": {
       "name": "GECB_MedicalRecord_Inbound_*_OnC.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/OC AllScripts"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\OC AllScripts"
     }
   },
   "mpnd": {
     "inputs": {
       "name": "GECB_MPND_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Medicaid Pending"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Medicaid Pending"
     }
   },
   "non codify": {
     "inputs": {
       "name": "GECB_BCBSClearClaim_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/BCBS ClearClaim"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\BCBS ClearClaim"
     }
   },
   "powersign": {
     "inputs": {
       "name": "GECB_PowerSign_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/PowerSign"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\PowerSign"
     }
   },
   "spni": {
     "inputs": {
       "name": "GECB_SPNI_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/SPNI"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\SPNI"
     }
   },
   "sunrise": {
     "inputs": {
       "name": "GECB_SCM_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/SCM"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\SCM"
     }
   },
   "aehr": {
     "inputs": {
       "name": "GECB_MedicalRecord_Inbound_????????.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\Medical Record"
     }
   },
   "aehr multi": {
     "inputs": {
       "name": "GECB_MedicalRecord_Inbound_????????_?.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/Medical Record"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\Medical Record"
     }
   },
   "cs1235": {
     "inputs": {
       "name": "GECB_CSE1235_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Coding/CSE1235"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\CSE1235"
     }
   },
   "cs1236": {
     "inputs": {
       "name": "GECB_CSE1236_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Coding/CSE1236"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\CSE1236"
     }
   },
   "tes 1249": {
     "inputs": {
       "name": "GECB_TES1249_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Coding/TES1249"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\TES1249"
     }
   },
   "tes 6146": {
     "inputs": {
       "name": "GECB_TES6146_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Coding/TES6146"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\TES6146"
     }
   },
   "coding audit": {
     "inputs": {
       "name": "GECB_CodingMRAuditPull_Inbound_*.xls",
-      "destination": "M:/CPP-Data/Sutherland RPA/Coding/MR AP"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\MR AP"
     }
   },
   "bad debt itemized statement": {
@@ -100,61 +100,61 @@
       "name": "*_PAANS_BADDEBT_IB_BOT*.csv",
       "date_formatting": "YYYYMMDD",
       "date_formatting_dt": "%Y%m%d",
-      "destination": "M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\BD IS Printing\\YYYY"
     }
   },
   "mcd mco": {
     "inputs": {
       "name": "eCareNext_MCDMCO_Inbound_*.xls",
-      "destination": "M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCD MCO Available"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\MCD MCO Available"
     }
   },
   "mcr advantage": {
     "inputs": {
       "name": "eCareNext_MCRAdvantage_Inbound_*.xls",
-      "destination": "M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCR Advantage"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\MCR Advantage"
     }
   },
   "mcr part b": {
     "inputs": {
       "name": "eCareNext_MCRPartB_Inbound_*.xls",
-      "destination": "M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/MCR PartB Inactive"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\MCR PartB Inactive"
     }
   },
   "tpl": {
     "inputs": {
       "name": "eCareNext_TPLAlert_Inbound_*.csv",
-      "destination": "M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/TPL Alert"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\TPL Alert"
     }
   },
   "homecare discharge": {
     "inputs": {
       "name": "CAREPORT_HomeCare_Inbound_*.csv",
-      "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Input & Output Files"
+      "destination": "\\\\NASHCN01\\SHAREDATA\\NewRefCenter\\ANewReferralPHI\\NS\\BOT\\Input & Output Files"
     }
   },
   "itemized statement": {
     "inputs": {
       "name": "*_PAANS_BOT*.csv",
-      "destination": "M:/FPPShare/FPP-Production/Itemized Statement HCX BOT"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPPShare\\FPP-Production\\Itemized Statement HCX BOT"
     }
   },
   "ncoa": {
     "inputs": {
       "name": "*.NSH.NCOA*.csv",
-      "destination": "M:/FPPShare/FPP-Production/NCOA BOT"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPPShare\\FPP-Production\\NCOA BOT"
     }
   },
   "mnp": {
     "inputs": {
       "name": "eCareNext_SOARIAN_Inbound_*.xls",
-      "destination": "M:/FPP-CPP/Revenue Cycle Operations Training/Projects/RPA Project/Medicare Not Primary"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\Medicare Not Primary"
     }
   },
   "charge correction": {
     "inputs": {
       "name": "Northwell_ChargeCorrection_Input_*.csv",
-      "destination": "M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/MMDDYYYY",
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\ChargeCorrection\\YYYY\\MM YYYY\\MMDDYYYY",
       "date_formatting": "MMDDYYYY",
       "date_formatting_dt": "%m%d%Y"
     }
