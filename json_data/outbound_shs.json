@@ -1,43 +1,43 @@
 {
     "itemized_statement_BD": {
         "BotName": "Bad Debt - Printing Itemized Statement",
-        "destination": "M:/CPP-Data/Sutherland RPA/BD IS Printing/YYYY/",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\BD IS Printing\\YYYY\\",
         "file_name": "YYYYMMDD_PAANS_BADDEBT_IB_BOT_OUTBOUND.xlsx",
         "date_format": "YYYYMMDD"
     },
     "mr_audit": {
         "BotName": "MRAuditPull",
-        "destination": "M:/CPP-Data/Sutherland RPA/Coding/MR AP/",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Coding\\MR AP\\",
         "file_name": "GECB_CodingMRAuditPull_Outbound_MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
     },
     "charge_correction": {
         "BotName": "Charge Correction",
-        "destination": "M:/CPP-Data/Sutherland RPA/ChargeCorrection/YYYY/MM YYYY/MMDDYYYY/",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\ChargeCorrection\\YYYY\\MM YYYY\\MMDDYYYY\\",
         "file_name": "Northwell_ChargeCorrection_Output_MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
     },
     "itemized_statement": {
         "BotName": "Printing Itemized Statement",
-        "destination": "M:/FPPShare/FPP-Production/Itemized Statement HCX BOT/",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPPShare\\FPP-Production\\Itemized Statement HCX BOT\\",
         "file_name": "YYYYMMDD_PAANS_BOT_v2_OUTBOUND.xlsx",
         "date_format": "YYYYMMDD"
     },
     "NCOA": {
         "BotName": "Patient Address Update via NCOA",
-        "destination": "M:/FPPShare/FPP-Production/NCOA BOT/",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPPShare\\FPP-Production\\NCOA BOT\\",
         "file_name": "YYYYMMDD.NSH.NCOA_OUTBOUND.xlsx",
         "date_format": "YYYYMMDD"
     },
     "Homecare": {
         "BotName": "HomeCareDischarge",
-        "destination": "S:/NewRefCenter/ANewReferralPHI/NS/BOT/Input & Output Files/",
+        "destination": "\\\\NASHCN01\\SHAREDATA\\NewRefCenter\\ANewReferralPHI\\NS\\BOT\\Input & Output Files\\",
         "file_name": "CAREPORT_HomeCare_Outbound_MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
     },
     "LabAppeal": {
         "BotName": "LabAppeals",
-        "destination": "T:/RPA Medical Records Denials/Bot Output Files/",
+        "destination": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING\\RPA Medical Records Denials\\Bot Output Files\\",
         "file_name": "Labappeals Output - MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
     }
