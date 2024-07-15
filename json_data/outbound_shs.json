@@ -40,5 +40,11 @@
         "destination": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING\\RPA Medical Records Denials\\Bot Output Files\\",
         "file_name": "Labappeals Output - MMDDYYYY.xlsx",
         "date_format": "MMDDYYYY"
+    },
+    "cpe": {
+        "BotName": "MedicarePartBCPE",
+        "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\FPP-CPP\\Revenue Cycle Operations Training\\Projects\\RPA Project\\CPE Medicine\\Outputs\\",
+        "file_name": "CPE_Outbound_MMDDYYYY.xlsx",
+        "date_format": "MMDDYYYY"
     }
 }
