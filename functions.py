@@ -203,10 +203,10 @@ def parse_output_files(data:dict, source_dir:str):
                 destination = destination+file_name
                 if os.path.exists(folder) and df.shape[0] > 0:
                     df.to_excel(destination, index=False, sheet_name='export')
-            shutil.move(output_file,output_file_dest)
         except Exception as e:
             logger.critical(f"Error: {e} with {output_file} in {source_dir}")
             continue
+        shutil.move(output_file,output_file_dest)
         
 def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     logger.info(f'----------lab appeals merged files---------')
