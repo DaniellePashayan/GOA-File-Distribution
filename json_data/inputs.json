@@ -162,7 +162,7 @@
   "mr_bundling_pull": {
     "inputs": {
       "name": "GECB_MRPullBundling_Inbound_*.xls",
-      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\MR Bundling Pull"
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\MR Pull Bundling"
     }
   }
 }
