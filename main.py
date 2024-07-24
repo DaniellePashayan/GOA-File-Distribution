@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
         drives = {
             "M": "\\\\NT2KWB972SRV03\\SHAREDATA",
-            "N": "\\\\NASDATA204\\SHAREDATA\BOT CLAIMSTATUS DATA-PHI",
+            "N": "\\\\NASDATA204\\SHAREDATA\\BOT CLAIMSTATUS DATA-PHI",
             "S": "\\\\NASHCN01\\SHAREDATA",
             "Y": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED",
             "T": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING"
