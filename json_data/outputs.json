@@ -76,5 +76,29 @@
     "date_formatting": "MM_DD_YY",
     "date_formatting_dt": "%m_%d_%y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MR Pull Bundling\\YYYY\\MM YYYY\\"
+  },
+  "hcx_is": {
+    "zip_name": "IB Agency Requests*.zip",
+    "date_formatting": "MMDDYYYY",
+    "date_formatting_dt": "%m%d%Y",
+    "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Dabt\\BOT AV\\YYYY\\"
+  },
+  "EPIC_codify": {
+    "zip_name": "EPIC_Codify*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\Codify\\YYYY\\MM YYYY\\"
+  },
+  "EPIC_mckesson_bundling": {
+    "zip_name": "EPIC_McKesson_*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\McKesson\\YYYY\\MM YYYY\\"
+  },
+  "EPIC_bcbs_bundling": {
+    "zip_name": "EPIC_BCBSClearClaimConnection_*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\YYYY\\MM YYYY\\"
   }
 }
