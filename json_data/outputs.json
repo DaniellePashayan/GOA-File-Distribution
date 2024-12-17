@@ -85,20 +85,20 @@
   },
   "EPIC_codify": {
     "zip_name": "EPIC_Codify*.zip",
-    "date_formatting": "MM_DD_YY",
-    "date_formatting_dt": "%m_%d_%y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\Codify\\YYYY\\MM YYYY\\"
+    "date_formatting": "MM_DD_YYYY",
+    "date_formatting_dt": "%m_%d_%Y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\Codify\\EPIC\\YYYY\\MM YYYY\\"
   },
   "EPIC_mckesson_bundling": {
     "zip_name": "EPIC_McKesson_*.zip",
-    "date_formatting": "MM_DD_YY",
-    "date_formatting_dt": "%m_%d_%y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\McKesson\\YYYY\\MM YYYY\\"
+    "date_formatting": "MM_DD_YYYY",
+    "date_formatting_dt": "%m_%d_%Y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\McKesson\\EPIC\\YYYY\\MM YYYY\\"
   },
   "EPIC_bcbs_bundling": {
     "zip_name": "EPIC_BCBSClearClaimConnection_*.zip",
-    "date_formatting": "MM_DD_YY",
-    "date_formatting_dt": "%m_%d_%y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\YYYY\\MM YYYY\\"
+    "date_formatting": "MM_DD_YYYY",
+    "date_formatting_dt": "%m_%d_%Y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\EPIC\\YYYY\\MM YYYY\\"
   }
 }
