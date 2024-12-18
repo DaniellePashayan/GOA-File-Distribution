@@ -164,5 +164,17 @@
       "name": "GECB_MRPullBundling_Inbound_*.xls",
       "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\MR Pull Bundling"
     }
+  },
+  "claim_status_inbound": {
+    "inputs": {
+      "name": "NW_*INBOUND_CLAIMSTATUS_BOT_*.txt",
+      "destination": "//NASDATA204/SHAREDATA/BOT CLAIMSTATUS DATA-PHI"
+    }
+  },
+  "claim_status_outbound": {
+    "inputs": {
+      "name": "Northwell_*Outbound_*.txt",
+      "destination": "//NASDATA204/SHAREDATA/BOT CLAIMSTATUS DATA-PHI"
+    }
   }
 }
