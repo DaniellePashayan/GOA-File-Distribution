@@ -1,4 +1,14 @@
+colorama==0.4.6
+et-xmlfile==1.1.0
 loguru==0.7.2
-pandas==2.2.2
-tqdm==4.66.4
+numpy==2.0.0
 openpyxl==3.1.2
+pandas==2.2.2
+# Editable Git install with no remote (process_status==0.2.2)
+-e c:\users\pa_dpashayan\desktop\pyprojects\process_status
+python-dateutil==2.9.0.post0
+pytz==2024.1
+six==1.16.0
+tqdm==4.66.4
+tzdata==2024.1
+win32-setctime==1.1.0
