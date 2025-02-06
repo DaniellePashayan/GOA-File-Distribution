@@ -4,13 +4,13 @@ import os
 from loguru import logger
 
 from functions import move_inputs, move_outputs, parse_output_files
-from process_status.status_handler import JSONStatus
+from orcca.status_handler import JSONStatus
 
 
 if __name__ == "__main__":
 
     status = JSONStatus(
-        master_file_path=r'C:\Users\pa_dpashayan\OneDrive - Northwell Health\PHI Documents Only\Management\Scheduled Scripts - Status.json',
+        master_file_path=r'\\NT2KWB972SRV03\SHAREDATA\CPP-Data\CBO Westbury Managers\LEADERSHIP\Bot Folder\Automated Scripts Status.json',
         process_name = 'GOA File Distribution',
     )
     status.update_status('Running')
