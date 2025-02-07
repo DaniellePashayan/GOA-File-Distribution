@@ -79,9 +79,9 @@
   },
   "hcx_is": {
     "zip_name": "IB Agency Requests*.zip",
-    "date_formatting": "MMDDYYYY",
-    "date_formatting_dt": "%m%d%Y",
-    "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Dabt\\BOT AV\\YYYY\\"
+    "date_formatting": "MM_DD_YYYY",
+    "date_formatting_dt": "%m_%d_%Y",
+    "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Debt\\BOT AV\\YYYY\\"
   },
   "EPIC_codify": {
     "zip_name": "EPIC_Codify*.zip",
