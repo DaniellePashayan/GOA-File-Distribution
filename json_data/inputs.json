@@ -194,5 +194,11 @@
       "name": "MRUpload*.txt",
       "destination": "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC"
     }
+  },
+  "pwk275": {
+    "inputs": {
+      "name": "GECB_*_PWK275_Inbound_*.xls",
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\PWK 275"
+    }
   }
 }

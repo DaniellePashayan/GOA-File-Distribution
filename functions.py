@@ -116,6 +116,13 @@ def move_outputs(data: dict, source_dir: str):
                         fldr_frmt = '%m%d%Y'
                         destination = f'{destination}{date.strftime(fldr_frmt)}/'
                     destination = f'{destination}{date.strftime(date_formatting_dt)}'
+                    
+                    # check if destination folder exists
+                    if os.path.exists(destination):
+                        logger.info(f'{destination} already exists')
+                        # delete the file
+                        os.remove(file)
+                        continue
                 
                     # unzip the files and move them to the destination
                     with open(file, 'rb') as src:

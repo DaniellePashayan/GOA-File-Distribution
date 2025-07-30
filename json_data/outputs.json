@@ -100,5 +100,17 @@
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\EPIC\\YYYY\\MM YYYY\\"
+  },
+  "PWK275_Touchworks": {
+    "zip_name": "AllscriptsPWK_*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\PWK 275\\Touchworks\\YYYY\\MM YYYY\\"
+  },
+  "PWK275_Sunrise": {
+    "zip_name": "SunrisePWK_*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\PWK 275\\Sunrise\\YYYY\\MM YYYY\\"
   }
 }
