@@ -87,19 +87,19 @@
     "zip_name": "EPIC_Codify*.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\Codify\\EPIC\\YYYY\\MM YYYY\\"
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\EPIC Codify\\YYYY\\MM YYYY\\"
   },
   "EPIC_mckesson_bundling": {
     "zip_name": "EPIC_McKesson_*.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\McKesson\\EPIC\\YYYY\\MM YYYY\\"
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\EPIC McKesson\\YYYY\\MM YYYY\\"
   },
   "EPIC_bcbs_bundling": {
     "zip_name": "EPIC_BCBSClearClaimConnection_*.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
-    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\EPIC\\YYYY\\MM YYYY\\"
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\EPIC BCBSClearClaimConnection\\YYYY\\MM YYYY\\"
   },
   "PWK275_Touchworks": {
     "zip_name": "AllscriptsPWK_*.zip",

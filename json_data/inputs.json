@@ -200,5 +200,11 @@
       "name": "GECB_*_PWK275_Inbound_*.xls",
       "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\PWK 275"
     }
+  },
+  "EPIC Outbounds": {
+    "inputs": {
+      "name": "EPIC_*_Outbound_*.xlsx",
+      "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs\\EPIC Outbounds\\"
+    }
   }
 }

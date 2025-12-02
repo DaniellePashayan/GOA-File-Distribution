@@ -192,7 +192,7 @@ def parse_output_files(data:dict, source_dir:str):
     output_files = glob(source_dir + "/Outbound*.xlsx")
     for output_file in output_files:
         try:
-            main = pd.read_excel(output_file, sheet_name='export')
+            main = pd.read_excel(output_file, sheet_name=0)
             output_file_dest = output_file.replace(source_dir,'\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs')
             for use_case, use_case_data in data.items():
                 logger.info(f'parsing output file for {use_case}')
@@ -201,19 +201,26 @@ def parse_output_files(data:dict, source_dir:str):
                 date_formatting = 'MMDDYYYY'
                 date_formatting_dt = '%m%d%Y'
                     
-                destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt, create_folder=False)
+                destination,date = extract_date_from_file_and_replace_date_in_destination(output_file, use_case_data['destination'], date_formatting, date_formatting_dt)
                 
                 date_format = use_case_data['date_format'].replace("YYYY", str(date.year)).replace("MM", str(date.month).zfill(2)).replace("DD", str(date.day).zfill(2))
                     
                 file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
                 folder = destination
                 destination = destination+file_name
-                if os.path.exists(folder) and df.shape[0] > 0:
+                if os.path.exists(folder) and df.shape[0] > 0 and not os.path.exists(destination):
                     df.to_excel(destination, index=False, sheet_name='export')
+                elif not os.path.exists(folder):
+                    logger.error(f"Destination folder {folder} does not exist for {use_case}")
+                    continue
+                elif df.shape[0] == 0:
+                    logger.warning(f"No data found for {use_case} in {output_file}")
+                    continue
         except Exception as e:
             logger.critical(f"Error: {e} with {output_file} in {source_dir}")
             continue
-        shutil.move(output_file,output_file_dest)
+        finally:
+            shutil.move(output_file,output_file_dest)
         
 def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     logger.info(f'----------lab appeals merged files---------')
