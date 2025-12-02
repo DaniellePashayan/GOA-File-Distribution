@@ -4,7 +4,7 @@ import os
 from loguru import logger
 
 from functions import move_inputs, move_outputs, parse_output_files
-from orcca.status_handler import JSONStatus
+from orcca.status_handler import JSONStatus   # type: ignore
 
 
 if __name__ == "__main__":
