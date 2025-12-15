@@ -180,19 +180,28 @@
   "EPIC_bundling_import": {
     "inputs": {
       "name": "BundlingImport*.txt",
-      "destination": "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC"
+      "destination": [
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC",
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC/ARCHIVE"
+        ]
     }
   },
   "EPIC_BCBSSM_import": {
     "inputs": {
       "name": "SecureMessagingImport*.txt",
-      "destination": "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC"
+      "destination": [
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC",
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC/ARCHIVE"
+        ]
     }
   },
   "EPIC_MRUpload": {
     "inputs": {
       "name": "MRUpload*.txt",
-      "destination": "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC"
+      "destination": [
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC",
+        "//NT2KWB972SRV03/SHAREDATA/CPP-Data/Sutherland RPA/Northwell Process Automation ETM Files/EPIC/ScriptedIntoEPIC/ARCHIVE"
+        ]
     }
   },
   "pwk275": {
