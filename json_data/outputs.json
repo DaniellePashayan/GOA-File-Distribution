@@ -112,5 +112,11 @@
     "date_formatting": "MM_DD_YY",
     "date_formatting_dt": "%m_%d_%y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\PWK 275\\Sunrise\\YYYY\\MM YYYY\\"
+  },
+  "PWK275_Powersign": {
+    "zip_name": "PowerSignPWK_*.zip",
+    "date_formatting": "MM_DD_YY",
+    "date_formatting_dt": "%m_%d_%y",
+    "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\PWK 275\\Powersign\\YYYY\\MM YYYY\\"
   }
 }
