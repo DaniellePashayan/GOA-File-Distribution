@@ -72,15 +72,21 @@
     "destination": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING\\RPA Medical Records Denials\\Patient Documents\\Bot - Saved Records\\YYYY\\MM YYYY\\"
   },
   "mr_bundling": {
-    "zip_name": "MRPullBundling_*.zip",
+    "zip_name": "MRPull_*.zip",
     "date_formatting": "MM_DD_YY",
     "date_formatting_dt": "%m_%d_%y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MR Pull Bundling\\YYYY\\MM YYYY\\"
   },
-  "hcx_is": {
+  "hcx_is_old": {
     "zip_name": "IB Agency Requests*.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
+    "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Debt\\BOT AV\\YYYY\\"
+  },
+  "hcx_is_new": {
+    "zip_name": "*IB Agency Requests*.zip",
+    "date_formatting": "MMDDYYYY",
+    "date_formatting_dt": "%m%d%Y",
     "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Debt\\BOT AV\\YYYY\\"
   },
   "EPIC_codify": {
