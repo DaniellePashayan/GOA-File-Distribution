@@ -4,16 +4,9 @@ import os
 from loguru import logger
 
 from functions import move_inputs, move_outputs, parse_output_files
-from orcca.status_handler import JSONStatus   # type: ignore
 
 
 if __name__ == "__main__":
-
-    status = JSONStatus(
-        master_file_path=r'\\NT2KWB972SRV03\SHAREDATA\CPP-Data\CBO Westbury Managers\LEADERSHIP\Bot Folder\Automated Scripts Status.json',
-        process_name = 'GOA File Distribution',
-    )
-    status.update_status('Running')
     try:
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
         
@@ -53,9 +46,7 @@ if __name__ == "__main__":
             parse_output_files(shs, inputs_dir)
             move_outputs(outputs, inputs_dir)
             logger.success("All files have been moved successfully")
-            status.update_status('Completed')
         else:
             logger.critical("No files found in the inputs directory")
     except Exception as e:
         logger.exception(e)
-        status.update_status('Failed', errors=str(e))
