@@ -15,22 +15,93 @@ def _ensure_list_destination(destination: Union[str, List[str]]) -> List[str]:
     return [destination]
 
 
-def _copy_to_destinations(src: str, dests: List[str]) -> None:
-    """Copy a file to multiple destination directories.
+def _apply_filename_transform(original_filename: str, transform: dict) -> str:
+    """Apply transformations to a filename (e.g., date offsets).
 
-    Each destination is treated as a folder; the source filename is preserved.
+    Args:
+        original_filename: The original filename (without path).
+        transform: A dict with transformation rules, e.g.:
+            {"date_offset_days": 1, "date_format": "YYYYMMDD", "date_format_dt": "%Y%m%d"}
+
+    Returns:
+        The transformed filename.
+    """
+    if not transform:
+        return original_filename
+
+    date_offset = transform.get("date_offset_days", 0)
+    if date_offset == 0:
+        return original_filename
+
+    date_format = transform.get("date_format", "YYYYMMDD")
+    date_format_dt = transform.get("date_format_dt", "%Y%m%d")
+
+    # Build regex to extract date from filename
+    if " " in date_format:
+        regex_search = r"(\d{2}(\s)\d{2}(\s)\d{4})"
+    elif "_" not in date_format:
+        regex_search = r"(\d{" + str(len(date_format)) + "})"
+    elif len(date_format) == 8:
+        regex_search = r"(\d{2}(_)\d{2}(_)\d{2})"
+    elif len(date_format) == 10:
+        regex_search = r"(\d{2}(_)\d{2}(_)\d{4})"
+    else:
+        return original_filename
+
+    match = re.search(regex_search, original_filename)
+    if not match:
+        logger.warning(f"Could not extract date from filename {original_filename} using format {date_format}")
+        return original_filename
+
+    date_str = match.group(0)
+    try:
+        date_obj = datetime.datetime.strptime(date_str, date_format_dt)
+        new_date = date_obj + datetime.timedelta(days=date_offset)
+        new_date_str = new_date.strftime(date_format_dt)
+        new_filename = original_filename.replace(date_str, new_date_str)
+        logger.debug(f"Transformed filename: {original_filename} -> {new_filename} (offset: {date_offset} days)")
+        return new_filename
+    except Exception as e:
+        logger.warning(f"Failed to apply date offset to {original_filename}: {e}")
+        return original_filename
+
+
+def _copy_to_destinations(src: str, dests: List[str], transforms: Union[List[dict], None] = None) -> None:
+    """Copy a file to multiple destination directories with optional filename transformations.
+
+    Each destination is treated as a folder; the source filename is preserved or transformed.
+
+    Args:
+        src: Source file path.
+        dests: List of destination directories.
+        transforms: Optional list of transformation dicts (one per destination).
     """
     fname = os.path.basename(src)
-    for dest in dests:
+    for i, dest in enumerate(dests):
         try:
             os.makedirs(dest, exist_ok=True)
-            shutil.copy2(src, os.path.join(dest, fname))
-            logger.info(f"Copied {fname} to {dest}")
+            # Apply transformation if provided
+            target_name = fname
+            if transforms and i < len(transforms) and transforms[i]:
+                target_name = _apply_filename_transform(fname, transforms[i])
+            shutil.copy2(src, os.path.join(dest, target_name))
+            logger.info(f"Copied {fname} to {dest} as {target_name}")
         except Exception as e:
             logger.warning(f"Failed to copy {fname} to {dest}: {e}")
 
 
-def move_single_file(source: str, destination: Union[str, List[str]]):
+def move_single_file(source: str, destination: Union[str, List[str]], destination_transforms: Union[List[dict], None] = None):
+    """Move a file to destination(s) with optional filename transformations.
+
+    Args:
+        source: Source file path.
+        destination: Either a string (single destination) or a list of destination paths.
+        destination_transforms: Optional list of transformation dicts (one per destination).
+            Each dict can contain:
+                - "date_offset_days": int (number of days to add/subtract from date in filename)
+                - "date_format": str (e.g., "YYYYMMDD")
+                - "date_format_dt": str (e.g., "%Y%m%d")
+    """
     source = str(source)
     source_dir = os.path.dirname(source)
     file_name_indiv = os.path.basename(source)
@@ -49,13 +120,21 @@ def move_single_file(source: str, destination: Union[str, List[str]]):
     try:
         # If there are secondary destinations, copy the file there first
         if secondary:
-            _copy_to_destinations(source, secondary)
+            # Extract transforms for secondary destinations (skip primary transform at index 0)
+            secondary_transforms = None
+            if destination_transforms and len(destination_transforms) > 1:
+                secondary_transforms = destination_transforms[1:]
+            _copy_to_destinations(source, secondary, secondary_transforms)
 
-        # Move the original to the primary destination
-        shutil.move(source, os.path.join(primary, file_name_indiv))
-        logger.success(f"Moved {file_name_indiv} to {primary}")
+        # Move the original to the primary destination (with optional transformation)
+        primary_target_name = file_name_indiv
+        if destination_transforms and len(destination_transforms) > 0 and destination_transforms[0]:
+            primary_target_name = _apply_filename_transform(file_name_indiv, destination_transforms[0])
+
+        shutil.move(source, os.path.join(primary, primary_target_name))
+        logger.success(f"Moved {file_name_indiv} to {primary} as {primary_target_name}")
     except FileExistsError:
-        logger.critical(f"File {file_name_indiv} already exists in {primary}")
+        logger.critical(f"File {primary_target_name} already exists in {primary}")
     except FileNotFoundError:
         logger.critical(f"File {file_name_indiv} not found in {source_dir}")
     except Exception as e:
@@ -110,6 +189,7 @@ def move_inputs(data: dict, source_dir: str):
         logger.info(f'---------{use_case} inputs---------')
         file_name = use_case_data['inputs']['name']
         destination = use_case_data['inputs']['destination']
+        destination_transforms = use_case_data['inputs'].get('destination_transforms')
         has_date_formatting = True if use_case_data['inputs'].get(
             'date_formatting') else False
         files = glob(f"{source_dir}/{file_name}")
@@ -125,8 +205,8 @@ def move_inputs(data: dict, source_dir: str):
                             file, destination, date_formatting, date_formatting_dt)
                         if date is None:
                             logger.warning(f"Could not parse date from filename {file}; using unmodified destination")
-                    # move_single_file now supports list destinations
-                    move_single_file(file, destination)
+                    # move_single_file now supports list destinations and transforms
+                    move_single_file(file, destination, destination_transforms)
             except Exception as e:
                 logger.critical(f"Error: {e} with {file} in {source_dir}")
                 continue

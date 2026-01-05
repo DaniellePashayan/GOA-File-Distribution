@@ -183,7 +183,15 @@
       "destination": [
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC",
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC\\ARCHIVE"
-        ]
+        ],
+      "destination_transforms": [
+          {
+            "date_offset_days": 1,
+            "date_format": "YYYYMMDD",
+            "date_format_dt": "%Y%m%d"
+          },
+          null
+      ]
     }
   },
   "EPIC_BCBSSM_import": {
@@ -192,7 +200,15 @@
       "destination": [
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC",
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC\\ARCHIVE"
-        ]
+        ],
+      "destination_transforms": [
+        {
+          "date_offset_days": 1,
+          "date_format": "YYYYMMDD",
+          "date_format_dt": "%Y%m%d"
+        },
+        null
+      ]
     }
   },
   "EPIC_MRUpload": {
@@ -201,7 +217,15 @@
       "destination": [
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC",
         "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Northwell Process Automation ETM Files\\EPIC\\ScriptedIntoEPIC\\ARCHIVE"
-        ]
+        ],
+      "destination_transforms": [
+        {
+          "date_offset_days": 1,
+          "date_format": "YYYYMMDD",
+          "date_format_dt": "%Y%m%d"
+        },
+        null
+      ]
     }
   },
   "pwk275": {
