@@ -3,7 +3,7 @@ import json
 import os
 from loguru import logger
 
-from functions import move_inputs, move_outputs, parse_output_files
+from functions import move_inputs, move_outputs, parse_output_files, parse_epic_output_files
 
 
 if __name__ == "__main__":
@@ -40,10 +40,13 @@ if __name__ == "__main__":
                 outputs = json.load(file)
             with open('./json_data/outbound_shs.json') as file:
                 shs = json.load(file)
+            with open('./json_data/epic_outbound_shs.json') as file:
+                epic_shs = json.load(file)
 
             # move the input files to their respective destinations
             move_inputs(inputs, inputs_dir)
             parse_output_files(shs, inputs_dir)
+            parse_epic_output_files(epic_shs, inputs_dir)
             move_outputs(outputs, inputs_dir)
             logger.success("All files have been moved successfully")
         else:

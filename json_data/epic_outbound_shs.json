@@ -1,0 +1,8 @@
+{
+    "lab_appeals": {
+        "BotName": "LabAppeals",
+        "destination": "\\\\NASDATA201\\SHAREDATA\\NSHS-CENTRAL-LAB\\SHARED\\BILLING\\RPA Medical Records Denials\\Bot Output Files\\EPIC",
+        "file_name": "EPIC_LabAppeals_Outbound_MMDDYYYY.xlsx",
+        "date_format": "MMDDYYYY"
+    }
+}

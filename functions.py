@@ -401,3 +401,69 @@ def parse_output_files(data:dict, source_dir:str):
 
 
     
+def parse_epic_output_files(data: dict, source_dir: str):
+    """Parse EPIC_Outbound*.xlsx and distribute sheets per mapping.
+
+    This mirrors parse_output_files but targets files named EPIC_Outbound*.xlsx
+    and uses the provided mapping (typically loaded from epic_outbound_shs.json).
+    """
+    epic_output_files = glob(os.path.join(source_dir, "EPIC_Outbound*.xlsx"))
+    for output_file in epic_output_files:
+        try:
+            main = pd.read_excel(output_file, sheet_name=0)
+            output_file_dest = output_file.replace(
+                source_dir,
+                "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Combined Outputs",
+            )
+
+            for use_case, use_case_data in data.items():
+                logger.info(f'parsing EPIC output file for {use_case}')
+                df = main[main['BotName'] == use_case_data['BotName']]
+
+                # EPIC outbound files also use MMDDYYYY in filename
+                date_formatting = 'MMDDYYYY'
+                date_formatting_dt = '%m%d%Y'
+
+                destination, date = extract_date_from_file_and_replace_date_in_destination(
+                    output_file, use_case_data['destination'], date_formatting, date_formatting_dt
+                )
+
+                if date is None:
+                    logger.warning(f"Could not parse date from filename {output_file} for {use_case}; skipping")
+                    continue
+
+                dest_list = _ensure_list_destination(destination)
+                primary_dest = dest_list[0]
+                secondary = dest_list[1:]
+
+                date_format = (
+                    use_case_data['date_format']
+                    .replace("YYYY", str(date.year))
+                    .replace("MM", str(date.month).zfill(2))
+                    .replace("DD", str(date.day).zfill(2))
+                )
+                file_name = use_case_data['file_name'].replace(use_case_data['date_format'], date_format)
+                folder = primary_dest
+                destination_path = os.path.join(primary_dest, file_name)
+
+                if os.path.exists(folder) and df.shape[0] > 0 and not os.path.exists(destination_path):
+                    df.to_excel(destination_path, index=False, sheet_name='export')
+                    # copy the saved file to any secondary destinations
+                    if secondary:
+                        _copy_to_destinations(destination_path, secondary)
+                elif not os.path.exists(folder):
+                    logger.error(f"Destination folder {folder} does not exist for {use_case}")
+                    continue
+                elif df.shape[0] == 0:
+                    logger.warning(f"No data found for {use_case} in {output_file}")
+                    continue
+        except Exception as e:
+            logger.critical(f"Error: {e} with {output_file} in {source_dir}")
+            continue
+        finally:
+            try:
+                shutil.move(output_file, output_file_dest)
+            except Exception as e:
+                logger.warning(f"Failed to move processed EPIC output file {output_file} to {output_file_dest}: {e}")
+
+
