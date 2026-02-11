@@ -12,7 +12,7 @@
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\EPIC McKesson\\YYYY\\MM YYYY\\"
   },
   "EPIC_bcbs_bundling": {
-    "zip_name": "*EPIC_BCBSClearClaimConnection_*.zip",
+    "zip_name": "*EPIC_BCBSClearClaim*_*.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\EPIC BCBSClearClaimConnection\\YYYY\\MM YYYY\\"
@@ -30,7 +30,7 @@
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MedicalRecords\\OC WCNF Records\\YYYY\\MM YYYY\\"
   },
   "bcbs_bundling": {
-    "zip_name": "BCBSClearClaimConnection_*.zip",
+    "zip_name": "BCBSClearClaimConnection_??_??_??.zip",
     "date_formatting": "MM_DD_YY",
     "date_formatting_dt": "%m_%d_%y",
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\Bundling\\BCBSClearClaimConnection\\YYYY\\MM YYYY\\"
@@ -96,13 +96,13 @@
     "destination": "\\\\NT2KWB972SRV03\\SHAREDATA\\CPP-Data\\Sutherland RPA\\MR Pull Bundling\\YYYY\\MM YYYY\\"
   },
   "hcx_is_old": {
-    "zip_name": "IB Agency Requests*.zip",
+    "zip_name": "IB Agency Requests ??_??_????.zip",
     "date_formatting": "MM_DD_YYYY",
     "date_formatting_dt": "%m_%d_%Y",
     "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Debt\\BOT AV\\YYYY\\"
   },
   "hcx_is_new": {
-    "zip_name": "*IB Agency Requests*.zip",
+    "zip_name": "*IB Agency Requests ????????.zip",
     "date_formatting": "MMDDYYYY",
     "date_formatting_dt": "%m%d%Y",
     "destination": "\\\\NASDATA201\\SHAREDATA\\MV-RCR01\\SHARED\\RC Experience\\Bad Debt\\BOT AV\\YYYY\\"
