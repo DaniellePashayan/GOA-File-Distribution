@@ -186,15 +186,16 @@ def extract_date_from_file_and_replace_date_in_destination(file_name: str, desti
 def move_inputs(data: dict, source_dir: str):
     # setup the logging
     for use_case, use_case_data in data.items():
-        logger.info(f'---------{use_case} inputs---------')
         file_name = use_case_data['inputs']['name']
         destination = use_case_data['inputs']['destination']
         destination_transforms = use_case_data['inputs'].get('destination_transforms')
         has_date_formatting = True if use_case_data['inputs'].get(
             'date_formatting') else False
         files = glob(f"{source_dir}/{file_name}")
-        logger.info(f"Found {len(files)} files for {use_case}")
+        
         if len(files) > 0:
+            logger.info(f'---------{use_case} inputs---------')
+            logger.info(f"Found {len(files)} files for {use_case}")
             try:
                 for file in files:
                     # check if use_case_data['inputs']['date_formatting'] exists
@@ -231,103 +232,119 @@ def lab_appeals_merged(data:dict, destination:str, date:datetime.datetime):
     except FileNotFoundError:
         logger.critical(f'Lab Appeals Merged file not found for {date.strftime(date_formatting_dt)}')
 
+def archive_folder(file, source_dir, date):
+     # move the folder to the moved folder
+    file_name = file.split('\\')[-1]
+    pre_moved_folder_path = f'{source_dir}/{file_name}'
+    moved_folder_date = date.strftime('%Y %m')
+    moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
+    # make folder if not exists
+    os.makedirs(moved_folder_dir, exist_ok=True)
+    moved_folder_dir = f'{moved_folder_dir}/{file_name}'
+    logger.debug(f'Moving folder from {pre_moved_folder_path} to {moved_folder_dir}')
+
+    try:
+        os.rename(pre_moved_folder_path, moved_folder_dir)
+    except FileExistsError:
+        logger.warning(f'{moved_folder_dir} already exists')
+    except PermissionError:
+        logger.critical(f'Permission denied to move {pre_moved_folder_path}')
+
 def move_outputs(data: dict, source_dir: str):
     for use_case, use_case_data in data.items():
         files = glob(os.path.join(source_dir, use_case_data['zip_name']))
-        logger.info(f"Found {len(files)} output files for {use_case}")
-
+        
         if len(files) == 0:
             continue
+        else:
+            logger.info(f'---------{use_case} outputs---------')
+            logger.info(f"Found {len(files)} output files for {use_case}")
+        
+            try:
+                for file in files:
+                    # get the date from the file name so it can be used for the destination folder
+                    date_formatting = use_case_data['date_formatting']
+                    date_formatting_dt = use_case_data['date_formatting_dt']
+                    destination = use_case_data['destination']
+                    destination, date = extract_date_from_file_and_replace_date_in_destination(
+                        file, destination, date_formatting, date_formatting_dt)
 
-        logger.info(f'---------{use_case} outputs---------')
-        try:
-            for file in files:
-                # get the date from the file name so it can be used for the destination folder
-                date_formatting = use_case_data['date_formatting']
-                date_formatting_dt = use_case_data['date_formatting_dt']
-                destination = use_case_data['destination']
-                destination, date = extract_date_from_file_and_replace_date_in_destination(
-                    file, destination, date_formatting, date_formatting_dt)
+                    # normalize destinations
+                    dest_list = _ensure_list_destination(destination)
+                    primary_dest = dest_list[0]
+                    secondary_dests = dest_list[1:]
 
-                # normalize destinations
-                dest_list = _ensure_list_destination(destination)
-                primary_dest = dest_list[0]
-                secondary_dests = dest_list[1:]
-
-                if date is None:
-                    logger.warning(f"Could not parse date from filename {file}; skipping")
-                    continue
-
-                if use_case == 'chargecorrection':
-                    fldr_frmt = '%m%d%Y'
-                    primary_dest = f'{primary_dest}{date.strftime(fldr_frmt)}/'
-                primary_dest = f'{primary_dest}{date.strftime(date_formatting_dt)}'
-
-                # check if destination folder exists
-                if os.path.exists(primary_dest):
-                    logger.info(f'{primary_dest} already exists')
-                    # delete the file
-                    os.remove(file)
-                    continue
-
-                # unzip the files and move them to the primary destination
-                with open(file, 'rb') as src:
-                    zf = ZipFile(src)
-                    folder_count = [m for m in zf.infolist() if m.filename.endswith("/")].__len__()
-                    file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
-                    logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
-                    single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
-                    for single_file in single_files:
-                        zf.extract(single_file, primary_dest)
-                    zf.close()
-
-                # If there are secondary destinations, copy the original zip there for archival
-                if secondary_dests:
-                    _copy_to_destinations(file, secondary_dests)
-
-                if use_case == 'lab_appeals':
-                    # pass the primary destination and date
-                    lab_appeals_merged(use_case_data, primary_dest, date)
-
-                # confirm the destination folder has all the correct files and folders
-                new_file_count = 0
-                new_subdir_count = 0
-                for _, subdirs, files in os.walk(primary_dest):
-                    new_file_count += len(files)
-                    new_subdir_count += len(subdirs)
-
-                if new_file_count >= file_count and new_subdir_count >= folder_count:
-                    if new_file_count == file_count and new_subdir_count == folder_count:
-                        logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
-                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
-                    else:
-                        logger.warning(f'Moved {folder_count} folders and {file_count} files into the destination')
-                        logger.info(f'New folder contains {new_subdir_count} folders and {new_file_count} files into the destination')
-
-                    # move the folder to the moved folder
-                    file_name = file.split('\\')[-1]
-                    pre_moved_folder_path = f'{source_dir}/{file_name}'
-                    moved_folder_date = date.strftime('%Y %m')
-                    moved_folder_dir = f'{source_dir}/moved/{moved_folder_date}/'
-                    # make folder if not exists
-                    os.makedirs(moved_folder_dir, exist_ok=True)
-                    moved_folder_dir = f'{moved_folder_dir}/{file_name}'
-
-                    try:
-                        os.rename(pre_moved_folder_path, moved_folder_dir)
-                    except FileExistsError:
-                        logger.warning(f'{moved_folder_dir} already exists')
-                    except PermissionError:
-                        logger.critical(f'Permission denied to move {pre_moved_folder_path}')
+                    if date is None:
+                        logger.warning(f"Could not parse date from filename {file}; skipping")
                         continue
-                elif new_file_count < file_count:
-                    logger.critical(f"Failed to move all files to {primary_dest}")
-                    logger.critical(f"Expected {file_count} files but only found {new_file_count}")
-                elif new_subdir_count < folder_count:
-                    logger.critical(f"Failed to move all subdirectories to {primary_dest}")
-        except Exception as e:
-            logger.critical(f"Error: {e} with {file} in {source_dir}")
-            continue
+
+                    if use_case == 'chargecorrection':
+                        fldr_frmt = '%m%d%Y'
+                        primary_dest = f'{primary_dest}{date.strftime(fldr_frmt)}/'
+                    primary_dest = f'{primary_dest}{date.strftime(date_formatting_dt)}'
+
+                    # check if destination folder exists
+                    if os.path.exists(primary_dest):
+                        logger.warning(f'{primary_dest} already exists')
+                                               
+                        # delete the file
+                        # os.remove(file)
+                        continue
+
+                    # unzip the files and move them to the primary destination
+                    with open(file, 'rb') as src:
+                        zf = ZipFile(src)
+                        folder_count = [m for m in zf.infolist() if m.filename.endswith("/")].__len__()
+                        file_count = [m for m in zf.infolist() if not m.filename.endswith("/")].__len__()
+                        logger.info(f'Found {folder_count} folders and {file_count} files in the zip file')
+                        single_files = [m for m in zf.infolist() if not m.filename.endswith("/")]
+                        file_names = [m.filename.split('/')[-1] for m in single_files]
+                        folder_names = [m.filename.split('/')[0] for m in zf.infolist()]
+                        for single_file in single_files:
+                            zf.extract(single_file, primary_dest)
+                        zf.close()
+
+                    # If there are secondary destinations, copy the original zip there for archival
+                    if secondary_dests:
+                        _copy_to_destinations(file, secondary_dests)
+
+                    if use_case == 'lab_appeals':
+                        # pass the primary destination and date
+                        lab_appeals_merged(use_case_data, primary_dest, date)
+
+                    # confirm the destination folder has all the correct files and folders
+                    new_file_names = []
+                    new_subdir_names = []
+                    for _, subdirs, files in os.walk(primary_dest):
+                        new_file_names += files
+                        new_subdir_names += subdirs
+                    
+                    logger.info(f'Found {len(new_subdir_names)} folders and {len(new_file_names)} files in the zip file')
+                    logger.debug(f'Missing files: {set(file_names) - set(new_file_names) if set(file_names) - set(new_file_names) else "None"}')
+                    logger.debug(f'Missing folders: {set(folder_names) - set(new_subdir_names) if set(folder_names) - set(new_subdir_names) else "None"}')
+
+                    if len(new_file_names) >= file_count and len(new_subdir_names) >= folder_count:
+                        if len(new_file_names) == file_count and len(new_subdir_names) == folder_count:
+                            logger.success(f'Moved {folder_count} folders and {file_count} files into the destination')
+                            logger.info(f'New folder contains {len(new_subdir_names)} folders and {len(new_file_names)} files into the destination')
+                        else:
+                            logger.warning(f'Moved {folder_count} folders and {file_count} files into the destination')
+                            logger.info(f'New folder contains {len(new_subdir_names)} folders and {len(new_file_names)} files into the destination')
+                        archive_folder(file, source_dir, date)
+                       
+                    elif len(new_file_names) < file_count:
+                        logger.critical(f"Failed to move all files to {primary_dest}")
+                        logger.critical(f"Expected {file_count} files but only found {len(new_file_names)}")
+                    elif len(new_subdir_names) < folder_count:
+                        if len(new_file_names) == file_count:
+                            logger.info(f'Empty folder not transferred')
+                            # move the folder to the moved folder
+                            archive_folder(file, source_dir, date)
+                        else:
+                            logger.critical(f"Failed to move all subdirectories to {primary_dest}")
+            except Exception as e:
+                logger.critical(f"Error: {e} with {file} in {source_dir}")
+                continue
 
 def parse_output_files(data:dict, source_dir:str):
     
